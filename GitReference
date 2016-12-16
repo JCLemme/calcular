@@ -1,0 +1,13 @@
+Useful commands (in general order of use):
+
+git pull                        Update the local repository from the server repository
+git add file                    Adds file "file" to the local repository
+git commit -am "Message"        Commits file changes to the local repository
+git push                        Updates the server repository from the local repository
+
+
+
+Remember:
+Always pull master changes before committing/pushing yours.
+Make sure to add any files you've created before committing.
+Remember to commit and push, in that order.
