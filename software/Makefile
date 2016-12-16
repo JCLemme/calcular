@@ -15,10 +15,10 @@ RUNTOBJ=$(OBJDIR)/runtime.o
 all: kernel runtime
 
 kernel: $(OBJDIR) $(BINDIR) $(KERNOBJ) 
-	$(CC) $(CFLAGS) -o $(KERNNAME) $(KERNOBJ)
+	$(CC) $(CFLAGS) -o $(BINDIR)/$(KERNNAME) $(KERNOBJ)
 	
 runtime: $(OBJDIR) $(BINDIR) $(RUNTOBJ)
-	$(CC) $(CFLAGS) -o $(RUNTNAME) $(RUNTOBJ)
+	$(CC) $(CFLAGS) -o $(BINDIR)/$(RUNTNAME) $(RUNTOBJ)
 	
 clean: cleanobj cleanbin
 
