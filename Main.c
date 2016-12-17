@@ -348,36 +348,55 @@ void Distance ()
 
 void FourOperation ()
 {
-    printf("Enter 1st number\n");
-    scanf("%lf", &u);
-    printf("Enter operation\n");
-    char op[1];
-    scanf("%s", op);
-    printf("Enter 2nd number\n");
-    scanf("%lf", &v);
-    char add[1] = "+";
-    char subtract[1] = "-";
-    char multiply[1] = "*";
-    char divide[1] = "/";
-    int p = strcmp(op, add);
-    int s = strcmp(op, subtract);
-    int m = strcmp(op, multiply);
-    int d = strcmp(op, divide);
-    if (p == 0)
+    printf("Enter equation: \n");
+    char form[100];
+    scanf("%s", form);
+    
+    char *saveptr;
+    char *U, *V;
+    U = strtok_r(form, "+", &saveptr);
+    V = strtok_r(NULL, "+", &saveptr);
+    if (V > 0)
     {
+        printf("Add\n");
+        double u = atof(U);
+        double v = atof(V);
         Addition(u, v);
+        printf("Adding\n");
     }
-    else if (s == 0)
+    
+    U = strtok_r(form, "-", &saveptr);
+    V = strtok_r(NULL, "-", &saveptr);
+    if (V > 0)
     {
+        printf("Subtract\n");
+        double u = atof(U);
+        double v = atof(V);
         Subtraction(u, v);
+        printf("Subtracting\n");
     }
-    else if (m == 0)
+    
+    U = strtok_r(form, "*", &saveptr);
+    V = strtok_r(NULL, "*", &saveptr);
+    if (V > 0)
     {
+        printf("Multiply\n");
+        double u = atof(U);
+        double v = atof(V);
         Multiplication(u, v);
+        printf("Multiplying\n");
+
     }
-    else if (d == 0)
+    
+    U = strtok_r(form, "/", &saveptr);
+    V = strtok_r(NULL, "/", &saveptr);
+    if (V > 0)
     {
+        printf("Divide\n");
+        double u = atof(U);
+        double v = atof(V);
         Division(u, v);
+        printf("Dividing\n");
     }
 }
 
@@ -544,7 +563,7 @@ void ModeSelect ()
             break;
         case (7): fncPtr = &SimplifyFraction; //works
             break;
-        case (8): fncPtr = &FourOperation; //does not work (compare strings)
+        case (8): fncPtr = &FourOperation; //works
             break;
         case (9): fncPtr = &Logarithm; //works
             break;
@@ -552,7 +571,7 @@ void ModeSelect ()
             break;
         case (11): fncPtr = &Quadratic; //works
             break;
-        case (12): fncPtr = &Interest; //check the math with a calculator
+        case (12): fncPtr = &Interest; //works
             break;
         case (13): fncPtr = &Distance; //works
             break;
