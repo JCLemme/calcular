@@ -41,7 +41,6 @@ double SimpFrac (double num, double den) //SimpFrac & DecFrac
     return 0;
 }
 
-
 double NRoot (double x, double n) //Nth Root
 {
     double y = pow((x), (1.0/n));
