@@ -7,7 +7,9 @@ BINDIR=bin
 KERNNAME=kernel.bin
 RUNTNAME=runtime.bin
 
-KERNOBJ=$(OBJDIR)/kernel.o
+KERNOBJ=$(OBJDIR)/kernel.o \
+		$(OBJDIR)/spi.o
+		
 RUNTOBJ=$(OBJDIR)/runtime.o
 
 .PHONY: all kernel runtime clean cleanobj cleanbin cleandir
@@ -42,6 +44,9 @@ $(BINDIR):
 	
 $(OBJDIR)/kernel.o:
 	$(CC) $(CFLAGS) -o $(OBJDIR)/kernel.o -c kernel.c
+	
+$(OBJDIR)/spi.o:
+	$(CC) $(CFLAGS) -o $(OBJDIR)/spi.o -c spi.c
 	
 $(OBJDIR)/runtime.o:
 	$(CC) $(CFLAGS) -o $(OBJDIR)/runtime.o -c runtime.c
