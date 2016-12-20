@@ -41,7 +41,6 @@ double SimpFrac (double num, double den) //SimpFrac & DecFrac
     return 0;
 }
 
-
 double NRoot (double x, double n) //Nth Root
 {
     double y = pow((x), (1.0/n));
@@ -414,6 +413,24 @@ double r2 () //VoltageDivider
     return 0;
 }
 
+double RadtoDeg () //radians degrees
+{
+    double x;
+    scanf("%lf", &x);
+    double y = (180*x)/(pi);
+    printf("Ans = %lf\n", y);
+    return 0;
+}
+
+double DegtoRad () //radians degrees
+{
+    double x;
+    scanf("%lf", &x);
+    double y = (pi*x)/(180);
+    printf("Ans = %lf\n", y);
+    return 0;
+}
+
 //Functions
 //------------------------------------------------------------------------
 void Pythagorean ()
@@ -698,13 +715,26 @@ void Trigonometry ()
         case (12): Arccot();
             break;
     }
-    
+}
+
+void RadiansDegrees ()
+{
+    int input;
+    printf("1) RadtoDeg\n2) DegtoRad\n");
+    scanf("%i", &input);
+    switch(input)
+    {
+        case (1): RadtoDeg();
+            break;
+        case (2): DegtoRad();
+            break;
+    }
 }
 
 void ModeSelect ()
 {
     int mode;
-    printf("Select Mode: \n1) DecFrac\n2) FracDec\n3) Limit\n4) Derivative\n5) Power\n6) Root\n7) Simplify Fraction\n8) Four Operation\n9) Logarithm\n10) Table\n11) Quadratic\n12) Interest\n13) Distance\n14) Pythagorean Theorem\n15) Midpoint\n16) Voltage Divider\n17) Trig\n");
+    printf("Select Mode: \n1) DecFrac\n2) FracDec\n3) Limit\n4) Derivative\n5) Power\n6) Root\n7) Simplify Fraction\n8) Four Operation\n9) Logarithm\n10) Table\n11) Quadratic\n12) Interest\n13) Distance\n14) Pythagorean Theorem\n15) Midpoint\n16) Voltage Divider\n17) Trig\n18) RadiansDegrees\n");
     scanf("%i", &mode);
     //replace above with button values and such
     switch(mode)
@@ -741,7 +771,10 @@ void ModeSelect ()
             break;
         case (16): fncPtr = &VoltageDivider; //works
             break;
-        case (17): fncPtr = &Trigonometry; //works
+        case (17): fncPtr = &Trigonometry; //works (does not take pi)
+            break;
+        case (18): fncPtr = &RadiansDegrees; //works (does not take pi)
+            break;
     }
 }
 
