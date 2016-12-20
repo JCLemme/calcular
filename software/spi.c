@@ -7,7 +7,7 @@ static volatile uint8_t send, recv, msg;
 uint32_t stack[40+32];
 uint8_t launchedCog;
 
-uint8_t SPI_begin(uint8_t mosi, uint8_t miso, uint8_t sclk, uint8_t* cs)
+int SPI_begin(uint8_t mosi, uint8_t miso, uint8_t sclk, uint8_t* cs)
 {
     pinMosi = mosi;
     pinMiso = miso;
@@ -36,7 +36,7 @@ uint8_t SPI_begin(uint8_t mosi, uint8_t miso, uint8_t sclk, uint8_t* cs)
     return launchedCog;
 }
 
-uint8_t SPI_end()
+int SPI_end()
 {
     cogstop(launchedCog);
     
@@ -45,30 +45,43 @@ uint8_t SPI_end()
 
 uint8_t SPI_transferSync(uint8_t cs, uint8_t mosi)
 {
+    while(SPI_transferBegin(cs, mosi) == -1) {}
+    waitcnt(cnt+TRS_DELAY);
+    while(SPI_transferState == -1) {}
+    return SPI_transferResult(cs);
+}
+
+int SPI_transferBegin(int cs, uint8_t mosi)
+{
+    if(msg != 255)
+        return -1;
+    
+    OUTA &= ~(1<<cs);
+    waitcnt(cnt+TRS_DELAY);
+    
+    send = mosi;
+    msg = cs;
+    
     return 0;
 }
 
-uint8_t SPI_transferBegin(int cs, uint8_t mosi)
+int SPI_transferState()
 {
-    return 0;
+    if(msg != 255)
+        return -1;
+    else
+        return 0;
 }
 
-uint8_t SPI_transferState()
+uint8_t SPI_transferResult(int cs)
 {
-    return 0;
-}
-
-uint8_t SPI_transferResult()
-{
-    return 0;
+    OUTA |= (1<<cs);
+    return recv;
 }
 
 inline void SPI_internal()
 {
     while(msg == 255) {}
-    
-    OUTA &= ~(1<<msg);
-    waitcnt(cnt+(_CLKFREQ >> 5));
     
     OUTA &= ~(1<<pinSclk);
     waitcnt(cnt+(_CLKFREQ >> 5));
@@ -80,15 +93,17 @@ inline void SPI_internal()
     {
         OUTA |= (1<<pinSclk);
         
-        recv <<= 1;
-        recv += (INA & (1<<pinMiso));
+        recv |= ((INA & (1<<pinMiso)) << i);
         
         waitcnt(cnt+(_CLKFREQ >> 5));
         
         OUTA &= ~(1<<pinSclk);
         
         OUTA &= ~(1<<pinMosi);
-        OUTA |= (send
+        OUTA |= (((send & (1 << i)) >> i) << pinMosi);
         
         waitcnt(cnt+(_CLKFREQ >> 5));
+    }
+    
+    msg = 255;
 }
