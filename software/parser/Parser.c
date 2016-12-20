@@ -14,30 +14,40 @@
 #include <string.h>
 #include <ctype.h>
 
+//Global array
+double numbers[128];
+char operations[128];
 
 double GetEquation (double x)
 {
+    int q = 0;
     char equation[100];
     scanf("%s", equation);
-    for (int i = 0; i < strlen(equation); i++)
+    char number[60];
+    memset(number,0,sizeof number);
+    for (int i = 0; i < strlen(equation)+1; i++)
     {
         char tok = equation[i];
-        printf("Reading: %c\n", tok);
-        if(!isdigit(tok))
+        if (isdigit(tok))
         {
-            //it's not a number and do not number things
-            printf("not a number\n");
-            //check for all characters between either NULL and tok or between nth tok and (n+1)th tok
-            for (int q = 0; q < i; q++) //doesn't work for multiple operations
-            {
-                //get all previous characters
-                char number = equation[q];
-                printf("Previous digit = %c\n", number);
-            }
-            //if an x is entered, treat it as a double variable
+            strncat(number, &tok, 1);
+        }
+        else if(!isdigit(tok))
+        {
+            //convert string "number" to a number
+            double num = atof(number);
+            //pass the number to one spot in a dynamic array
+            numbers[q] = num;
+            q = q + 1;
+            //reset string "number"
+            memset(number,0,sizeof number);
         }
     }
     //return equation with x's
+    //if an x is entered, treat it as a double variable
+    printf("number 1 = %lf\n", numbers[0]);
+    printf("number 2 = %lf\n", numbers[1]);
+    printf("number 3 = %lf\n", numbers[2]);
     return 0;
 }
 
@@ -46,6 +56,3 @@ int main (int argc, char *argv[])
     int x = 5;
     GetEquation(x);
 }
-
-//run through entire string and look for sh*t character by character
-
