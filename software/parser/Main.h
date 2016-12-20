@@ -18,7 +18,8 @@
 #include <string.h>
 
 //Global Variables
-double a; 
+double a;
+const double pi = 3.14159265358979323846264;
 double x, b, c, n, g, u, v, num, den, Vout, Vin, R1, R2;
 int minimum = (-5); //minimum x value for table
 int maximum = (5); //maximum x value for table

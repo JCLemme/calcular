@@ -9,7 +9,7 @@
 #include "Main.h"
 
 //Sub- Functions
-//------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 double Num (double x) //DecFrac
 {
     char string[100];
@@ -93,6 +93,131 @@ double Cont () //Interest
     return 0;
 }
 
+double Sin () //trig
+{
+    printf("sin(");
+    double x;
+    scanf("%lf", &x);
+    double y = sin((pi*x)/(180));
+    printf("\nsin%lf = %lf\n", x, y);
+    return 0;
+}
+
+double Cos () //trig
+{
+    printf("cos(");
+    double x;
+    scanf("%lf", &x);
+    double y = cos((pi*x)/(180));
+    printf("\ncos%lf = %lf\n", x, y);
+    return 0;
+}
+
+double Tan () //trig
+{
+    printf("tan(");
+    double x;
+    scanf("%lf", &x);
+    double y = tan((pi*x)/(180));
+    printf("\ntan%lf = %lf\n", x, y);
+    return 0;
+}
+
+double Sec () //trig
+{
+    printf("sec(");
+    double x;
+    scanf("%lf", &x);
+    double y = 1/(cos((pi*x)/(180)));
+    printf("\nsec%lf = %lf\n", x, y);
+    return 0;
+}
+
+double Csc () //trig
+{
+    printf("csc(");
+    double x;
+    scanf("%lf", &x);
+    double y = 1/(sin((pi*x)/(180)));
+    printf("\ncsc%lf = %lf\n", x, y);
+    return 0;
+}
+
+double Cot () //trig
+{
+    printf("cot(");
+    double x;
+    scanf("%lf", &x);
+    double y = 1/(tan((pi*x)/(180)));
+    printf("\ncot%lf = %lf\n", x, y);
+    return 0;
+}
+
+double Arcsin () //trig
+{
+    printf("arcsin(");
+    double x;
+    scanf("%lf", &x);
+    double y = asin(x);
+    double z = (y*180)/(pi);
+    printf("\narcsin%lf = %lf\n", x, z);
+    return 0;
+}
+
+double Arccos () //trig
+{
+    printf("arccos(");
+    double x;
+    scanf("%lf", &x);
+    double y = acos(x);
+    double z = (y*180)/(pi);
+    printf("\narccosn%lf = %lf\n", x, z);
+    return 0;
+}
+
+double Arctan () //trig
+{
+    printf("arctan(");
+    double x;
+    scanf("%lf", &x);
+    double y = atan(x);
+    double z = (y*180)/(pi);
+    printf("\narctan%lf = %lf\n", x, z);
+    return 0;
+}
+
+double Arcsec () //trig
+{
+    printf("arcsec(");
+    double x;
+    scanf("%lf", &x);
+    double y = acos(1/x);
+    double z = (y*180)/(pi);
+    printf("\narcsec%lf = %lf\n", x, z);
+    return 0;
+}
+
+double Arccsc () //trig
+{
+    printf("arccsc(");
+    double x;
+    scanf("%lf", &x);
+    double y = asin(1/x);
+    double z = (y*180)/(pi);
+    printf("\narccsc%lf = %lf\n", x, z);
+    return 0;
+}
+
+double Arccot () //trig
+{
+    printf("arccot(");
+    double x;
+    scanf("%lf", &x);
+    double y = atan(1/x);
+    double z = (y*180)/(pi);
+    printf("\narccot%lf = %lf\n", x, z);
+    return 0;
+}
 
 /*double TheDsCancel (double x) //DyDx
 {
@@ -290,7 +415,7 @@ double r2 () //VoltageDivider
 }
 
 //Functions
-//------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 void Pythagorean ()
 {
     int pythagoras;
@@ -541,10 +666,45 @@ void Interest ()
     }
 }
 
+void Trigonometry ()
+{
+    printf("1) sin\n2) cos\n3) tan\n4) sec\n5) csc\n6) cot\n7) arcsin\n8) arccos\n9) arctan\n10) arcsec\n11) arccsc\n12) arccot\n");
+    int input;
+    scanf("%i", &input);
+    switch (input)
+    {
+        case (1): Sin();
+            break;
+        case (2): Cos();
+            break;
+        case (3): Tan();
+            break;
+        case (4): Sec();
+            break;
+        case (5): Csc();
+            break;
+        case (6): Cot();
+            break;
+        case (7): Arcsin();
+            break;
+        case (8): Arccos();
+            break;
+        case (9): Arctan();
+            break;
+        case (10): Arcsec();
+            break;
+        case (11): Arccsc();
+            break;
+        case (12): Arccot();
+            break;
+    }
+    
+}
+
 void ModeSelect ()
 {
     int mode;
-    printf("Select Mode: \n1) DecFrac\n2) FracDec\n3) Limit\n4) Derivative\n5) Power\n6) Root\n7) Simplify Fraction\n8) Four Operation\n9) Logarithm\n10) Table\n11) Quadratic\n12) Interest\n13) Distance\n14) Pythagorean Theorem\n15) Midpoint\n16) Voltage Divider\n");
+    printf("Select Mode: \n1) DecFrac\n2) FracDec\n3) Limit\n4) Derivative\n5) Power\n6) Root\n7) Simplify Fraction\n8) Four Operation\n9) Logarithm\n10) Table\n11) Quadratic\n12) Interest\n13) Distance\n14) Pythagorean Theorem\n15) Midpoint\n16) Voltage Divider\n17) Trig\n");
     scanf("%i", &mode);
     //replace above with button values and such
     switch(mode)
@@ -580,11 +740,13 @@ void ModeSelect ()
         case (15): fncPtr = &Midpoint; //works
             break;
         case (16): fncPtr = &VoltageDivider; //works
+            break;
+        case (17): fncPtr = &Trigonometry; //works
     }
 }
 
 //Main Loop
-//------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 
 int main (int argc, char *argv[])
 {
@@ -592,7 +754,3 @@ int main (int argc, char *argv[])
     ModeSelect();
     (*fncPtr)();
 }
-
-
-
-
