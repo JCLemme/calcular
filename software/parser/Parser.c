@@ -42,21 +42,21 @@ double GetEquation (double x)
     for (int i = 0; i < strlen(equation)+1; i++)
     {
         char tok = equation[i];
+        
         if (isdigit(tok))
         {
             strncat(number, &tok, 1);
         }
-        else if(!isdigit(tok))
+        if(!isdigit(tok))
         {
-            //convert string "number" to a number
-            double num = atof(number);
-            //pass the number to one spot in a dynamic array
-            numbers[q] = num;
-            q = q + 1;
-            //reset string "number"
-            memset(number,0,sizeof number);
-            
-            
+            if (isdigit(equation[i-1]))
+            {
+                double num = atof(number);
+                numbers[q] = num;
+                q = q + 1;
+                memset(number,0,sizeof number);
+            }
+        
             switch(tok)
             {
                 case ('+'): printf("add\n");
@@ -69,11 +69,13 @@ double GetEquation (double x)
                     break;
                 case ('^'): printf("power\n");
                     break;
-                case ('('): printf("open parenthesis");
+                case ('('): printf("open parenthesis\n");
                     break;
-                case (')'): printf("close parenthesis");
+                case (')'): printf("close parenthesis\n");
                     break;
                 case ('l'): //could be log or ln so need to test again
+                    break;
+                case ('x'): //treat as a double variable
                     break;
             }
         }
