@@ -18,6 +18,20 @@
 double numbers[128];
 char operations[128];
 
+//Global Operations
+char add = '+';
+char subtract = '-';
+char multiply = '*';
+char divide = '/';
+char power = '^';
+char openparenthese = '(';
+char closeparenthese = ')';
+//multiple character: read first, then second, to the nth character
+char Log[4] = "log(";
+char ln[3] = "ln(";
+char Sin[4] = "sin(";
+
+
 double GetEquation (double x)
 {
     int q = 0;
@@ -41,6 +55,27 @@ double GetEquation (double x)
             q = q + 1;
             //reset string "number"
             memset(number,0,sizeof number);
+            
+            
+            switch(tok)
+            {
+                case ('+'): printf("add\n");
+                    break;
+                case ('-'): printf("subtract\n");
+                    break;
+                case ('*'): printf("multiply\n");
+                    break;
+                case ('/'): printf("divide\n");
+                    break;
+                case ('^'): printf("power\n");
+                    break;
+                case ('('): printf("open parenthesis");
+                    break;
+                case (')'): printf("close parenthesis");
+                    break;
+                case ('l'): //could be log or ln so need to test again
+                    break;
+            }
         }
     }
     //return equation with x's
