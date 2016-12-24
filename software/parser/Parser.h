@@ -10,5 +10,18 @@
 #define Parser_h
 
 #include <stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <math.h>
+#include <string.h>
+#include <ctype.h>
+
+struct MathToken
+{
+    double number;
+    char operation;
+    int isoperation; //0 = number, 1 = operation
+};
 
 #endif /* Parser_h */

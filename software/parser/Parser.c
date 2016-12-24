@@ -7,34 +7,33 @@
 //
 
 #include "Parser.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <math.h>
-#include <string.h>
-#include <ctype.h>
 
-//Global array
-double numbers[128];
-char operations[128];
+struct MathToken functionTokens[64];
 
-//Global Operations
-char add = '+';
-char subtract = '-';
-char multiply = '*';
-char divide = '/';
-char power = '^';
-char openparenthese = '(';
-char closeparenthese = ')';
-//multiple character: read first, then second, to the nth character
-char Log[4] = "log(";
-char ln[3] = "ln(";
-char Sin[4] = "sin(";
-
+double DoMath ()
+{
+    for (int p = 0; p <= 64; p++)
+    {
+        double b = functionTokens[p].number; //the tokens in this array are the actual numbers
+        char c = functionTokens[p].operation; //the tokens in this array are the operators
+        
+        if (c == '+')
+        {
+            double h = functionTokens[p-1].number;
+            double s = functionTokens[p+1].number;
+            double m =  h + s;
+            if (functionTokens[p].number == 0) //no more numbers
+            {
+                printf("result is: %lf\n", m);
+            }
+        }
+    }
+    return 0;
+}
 
 double GetEquation (double x)
 {
-    int q = 0;
+    int q = 0, v = 0;
     char equation[100];
     scanf("%s", equation);
     char number[60];
@@ -43,48 +42,39 @@ double GetEquation (double x)
     {
         char tok = equation[i];
         
-        if (isdigit(tok))
+        if (isdigit(tok) || tok == '.')
         {
             strncat(number, &tok, 1);
         }
-        if(!isdigit(tok))
+        if(!isdigit(tok) && tok != '.')
         {
             if (isdigit(equation[i-1]))
             {
                 double num = atof(number);
-                numbers[q] = num;
-                q = q + 1;
+                functionTokens[q].number = num;
+                functionTokens[q].isoperation = 0;
+                q++;
                 memset(number,0,sizeof number);
             }
         
-            switch(tok)
-            {
-                case ('+'): printf("add\n");
-                    break;
-                case ('-'): printf("subtract\n");
-                    break;
-                case ('*'): printf("multiply\n");
-                    break;
-                case ('/'): printf("divide\n");
-                    break;
-                case ('^'): printf("power\n");
-                    break;
-                case ('('): printf("open parenthesis\n");
-                    break;
-                case (')'): printf("close parenthesis\n");
-                    break;
-                case ('l'): //could be log or ln so need to test again
-                    break;
-                case ('x'): //treat as a double variable
-                    break;
-            }
+            functionTokens[q].operation = tok;
+            functionTokens[q].isoperation = 1;
+            q++;
         }
     }
-    //return equation with x's
-    //if an x is entered, treat it as a double variable
-    printf("number 1 = %lf\n", numbers[0]);
-    printf("number 2 = %lf\n", numbers[1]);
-    printf("number 3 = %lf\n", numbers[2]);
+    
+    for(int o = 0; o < q ;o++)
+    {
+        if(functionTokens[o].isoperation == 1)
+        {
+            printf("Token %d: Operation \"%c\"\n", o, functionTokens[o].operation);
+        }
+        else if (functionTokens[o].isoperation == 0)
+        {
+            printf("Token %d: Number \"%f\"\n", o, functionTokens[o].number);
+        }
+    }
+    DoMath();
     return 0;
 }
 

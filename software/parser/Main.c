@@ -599,16 +599,6 @@ void SimplifyFraction ()
     double Num = atof(numerator);
     double Den = atof(denominator);
     SimpFrac(Num, Den);
-    
-    /*char key[] = "/";
-     char denominator[100];
-     *denominator = strpbrk(frac,key);
-     int lengths = strlen(frac);
-     int lengthd = strlen(denominator);
-     char numerator[100];
-     strncpy( numerator, frac, (lengths-lengthd-1));
-     */
-
 }
 
 void NthRoot ()
@@ -783,7 +773,6 @@ void ModeSelect ()
 
 int main (int argc, char *argv[])
 {
-    const double a = 1.0*(pow(10, -10));
     ModeSelect();
     (*fncPtr)();
 }
