@@ -1,7 +1,7 @@
 #include "spi.h"
 
 static volatile uint8_t pinMosi, pinMiso, pinSclk;
-static volatile uint8_t* pinCS;
+static uint8_t* pinCS;
 static volatile uint8_t send, recv, msg;
 
 uint32_t stack[40+32];
@@ -46,8 +46,8 @@ int SPI_end()
 uint8_t SPI_transferSync(uint8_t cs, uint8_t mosi)
 {
     while(SPI_transferBegin(cs, mosi) == -1) {}
-    waitcnt(cnt+TRS_DELAY);
-    while(SPI_transferState == -1) {}
+    waitcnt(CNT+TRS_DELAY);
+    while(SPI_transferState() == -1) {}
     return SPI_transferResult(cs);
 }
 
@@ -57,7 +57,7 @@ int SPI_transferBegin(int cs, uint8_t mosi)
         return -1;
     
     OUTA &= ~(1<<cs);
-    waitcnt(cnt+TRS_DELAY);
+    waitcnt(CNT+TRS_DELAY);
     
     send = mosi;
     msg = cs;
@@ -84,7 +84,7 @@ inline void SPI_internal()
     while(msg == 255) {}
     
     OUTA &= ~(1<<pinSclk);
-    waitcnt(cnt+(_CLKFREQ >> 5));
+    waitcnt(CNT+TRS_DELAY);
     
     int i;
     recv = 0;
@@ -95,14 +95,14 @@ inline void SPI_internal()
         
         recv |= ((INA & (1<<pinMiso)) << i);
         
-        waitcnt(cnt+(_CLKFREQ >> 5));
+        waitcnt(CNT+TRS_DELAY);
         
         OUTA &= ~(1<<pinSclk);
         
         OUTA &= ~(1<<pinMosi);
         OUTA |= (((send & (1 << i)) >> i) << pinMosi);
         
-        waitcnt(cnt+(_CLKFREQ >> 5));
+        waitcnt(CNT+TRS_DELAY);
     }
     
     msg = 255;

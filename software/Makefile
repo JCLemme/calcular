@@ -36,17 +36,17 @@ cleandir:
 	
 # -----------------------------------------
 
-$(OBJDIR):
+$(OBJDIR): 
 	mkdir $(OBJDIR)
 	
-$(BINDIR):
+$(BINDIR): 
 	mkdir $(BINDIR)
 	
-$(OBJDIR)/kernel.o:
+$(OBJDIR)/kernel.o: kernel.c
 	$(CC) $(CFLAGS) -o $(OBJDIR)/kernel.o -c kernel.c
 	
-$(OBJDIR)/spi.o:
+$(OBJDIR)/spi.o: spi.c
 	$(CC) $(CFLAGS) -o $(OBJDIR)/spi.o -c spi.c
 	
-$(OBJDIR)/runtime.o:
+$(OBJDIR)/runtime.o: runtime.c
 	$(CC) $(CFLAGS) -o $(OBJDIR)/runtime.o -c runtime.c
