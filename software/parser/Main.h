@@ -25,5 +25,6 @@ int minimum = (-5); //minimum x value for table
 int maximum = (5); //maximum x value for table
 double s = 1; //seconds in between printing
 void (*fncPtr)();
+int RADDEG;
 
 #endif /* Main_h */
