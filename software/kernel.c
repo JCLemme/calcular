@@ -19,7 +19,7 @@ void main(void)
 {
     // Gotta go fast - 0x6F is XTAL1+PLL16X, should be clarified later
     clkset(0x6F, 5000000);
-    
+       
     // Begin serial communications (for kernel messages) 
     freopen("FDS:", "w", stdout);
     freopen("FDS:", "w", stderr);
