@@ -3,7 +3,7 @@
     (string_quote ")
     (space_in_quoted_tokens on)
     (host_cad "KiCad's Pcbnew")
-    (host_version "no-vcs-found-7415~56~ubuntu16.10.1")
+    (host_version "no-vcs-found-7475~57~ubuntu16.10.1")
   )
   (resolution um 10)
   (unit um)
@@ -1090,16 +1090,16 @@
       (pins CON1-8)
     )
     (net /PBUS_MISO
-      (pins R1-1 U2-13 U7-14 P7-4 P8-4 CON1-7 U3-6)
+      (pins R1-1 U2-19 U7-14 P7-4 P8-4 CON1-7 U3-6)
     )
     (net /PBUS_SCK
-      (pins U2-15 U7-12 P7-5 P8-5 CON1-5 U3-7)
+      (pins U2-21 U7-12 P7-5 P8-5 CON1-5 U3-7)
     )
     (net /PBUS_MOSI
-      (pins U2-14 U7-13 P7-3 P8-3 CON1-2 U3-5)
+      (pins U2-20 U7-13 P7-3 P8-3 CON1-2 U3-5)
     )
     (net /PBUS_CS3
-      (pins R4-2 U2-21 CON1-1)
+      (pins R4-2 U2-26 CON1-1)
     )
     (net "Net-(D1-Pad1)"
       (pins D1-1 U7-1)
@@ -1114,19 +1114,19 @@
       (pins P2-3 P3-1)
     )
     (net /DBUS_SCL
-      (pins P6-24 R12-1 U2-37 W8-1)
+      (pins P6-24 R12-1 U2-31 W8-1)
     )
     (net /DBUS_SDA
-      (pins P6-22 R11-1 U2-38 W7-1)
+      (pins P6-22 R11-1 U2-32 W7-1)
     )
     (net /DBUS_A0
-      (pins P6-21 U2-34 W6-1)
+      (pins P6-21 U2-33 W6-1)
     )
     (net /DBUS_RST
-      (pins P6-13 U2-35 W5-1)
+      (pins P6-13 U2-34 W5-1)
     )
     (net /DBUS_CS
-      (pins P6-9 U2-36 W4-1)
+      (pins P6-9 U2-35 W4-1)
     )
     (net /DBUS_BCKL
       (pins U7-2 P5-2)
@@ -1150,10 +1150,10 @@
       (pins P6-15)
     )
     (net /PBUS_CS1
-      (pins R5-1 U2-19 P7-2)
+      (pins R5-1 U2-25 P7-2)
     )
     (net /PBUS_CS2
-      (pins R6-2 U2-20 P8-2)
+      (pins R6-2 U2-24 P8-2)
     )
     (net /ADC_CH1
       (pins P9-15 U3-3)
@@ -1207,22 +1207,22 @@
       (pins P10-2 U2-7)
     )
     (net /PBUS_CS4
-      (pins R2-2 U2-22 U3-1)
+      (pins R2-2 U2-23 U3-1)
     )
     (net /PBUS_CS0
-      (pins R3-1 U2-16 U7-11)
+      (pins R3-1 U2-22 U7-11)
     )
     (net /MBUS_MISO
-      (pins R7-1 U2-3 U6-2 U8-2 U9-2 W9-1)
+      (pins R7-1 U2-14 U6-2 U8-2 U9-2 W9-1)
     )
     (net /MBUS_CS2
-      (pins R8-2 U2-12 U9-1 W14-1)
+      (pins R8-2 U2-15 U9-1 W14-1)
     )
     (net /MBUS_CS0
-      (pins R9-1 U2-10 U6-1 W12-1)
+      (pins R9-1 U2-11 U6-1 W12-1)
     )
     (net /MBUS_CS1
-      (pins R10-2 U2-11 U8-1 W13-1)
+      (pins R10-2 U2-16 U8-1 W13-1)
     )
     (net "Net-(R13-Pad1)"
       (pins R13-1 U6-3 U6-7 U8-7 U9-7)
@@ -1236,7 +1236,7 @@
     )
     (net /KEYM_ROW5
       (pins SW1-1 SW1-1@1 SW2-1 SW2-1@1 SW3-1 SW3-1@1 SW4-1 SW4-1@1 SW5-1 SW5-1@1
-        SW6-1 SW6-1@1 SW7-1 SW7-1@1 SW8-1 SW8-1@1 U2-1 R17-1)
+        SW6-1 SW6-1@1 SW7-1 SW7-1@1 SW8-1 SW8-1@1 U2-10 R17-1)
     )
     (net "Net-(SW10-Pad2)"
       (pins SW2-2 SW2-2@1 SW10-2 SW10-2@1 SW18-2 SW18-2@1 SW26-2 SW26-2@1 SW34-2 SW34-2@1
@@ -1268,35 +1268,35 @@
     )
     (net /KEYM_ROW4
       (pins SW9-1 SW9-1@1 SW10-1 SW10-1@1 SW11-1 SW11-1@1 SW12-1 SW12-1@1 SW13-1 SW13-1@1
-        SW14-1 SW14-1@1 SW15-1 SW15-1@1 SW16-1 SW16-1@1 U2-2 R18-1)
+        SW14-1 SW14-1@1 SW15-1 SW15-1@1 SW16-1 SW16-1@1 U2-9 R18-1)
     )
     (net /KEYM_ROW3
       (pins SW17-1 SW17-1@1 SW18-1 SW18-1@1 SW19-1 SW19-1@1 SW20-1 SW20-1@1 SW21-1
-        SW21-1@1 SW22-1 SW22-1@1 SW23-1 SW23-1@1 SW24-1 SW24-1@1 U2-23 R19-1)
+        SW21-1@1 SW22-1 SW22-1@1 SW23-1 SW23-1@1 SW24-1 SW24-1@1 U2-4 R19-1)
     )
     (net /KEYM_ROW2
       (pins SW25-1 SW25-1@1 SW26-1 SW26-1@1 SW27-1 SW27-1@1 SW28-1 SW28-1@1 SW29-1
-        SW29-1@1 SW30-1 SW30-1@1 SW31-1 SW31-1@1 SW32-1 SW32-1@1 U2-24 R20-1)
+        SW29-1@1 SW30-1 SW30-1@1 SW31-1 SW31-1@1 SW32-1 SW32-1@1 U2-3 R20-1)
     )
     (net /KEYM_ROW1
       (pins SW33-1 SW33-1@1 SW34-1 SW34-1@1 SW35-1 SW35-1@1 SW36-1 SW36-1@1 SW37-1
-        SW37-1@1 SW38-1 SW38-1@1 SW39-1 SW39-1@1 SW40-1 SW40-1@1 U2-25 R21-1)
+        SW37-1@1 SW38-1 SW38-1@1 SW39-1 SW39-1@1 SW40-1 SW40-1@1 U2-2 R21-1)
     )
     (net /KEYM_ROW0
       (pins SW41-1 SW41-1@1 SW42-1 SW42-1@1 SW43-1 SW43-1@1 SW44-1 SW44-1@1 SW45-1
-        SW45-1@1 SW46-1 SW46-1@1 SW47-1 SW47-1@1 SW48-1 SW48-1@1 U2-26 R22-1)
+        SW45-1@1 SW46-1 SW46-1@1 SW47-1 SW47-1@1 SW48-1 SW48-1@1 U2-1 R22-1)
     )
     (net /KEYM_DAT
-      (pins U1-14 U2-33)
+      (pins U1-14 U2-38)
     )
     (net "Net-(U1-Pad13)"
       (pins U1-13)
     )
     (net /KEYM_LAT
-      (pins U1-12 U2-31)
+      (pins U1-12 U2-36)
     )
     (net /KEYM_CLK
-      (pins U1-11 U2-32)
+      (pins U1-11 U2-37)
     )
     (net "Net-(U1-Pad10)"
       (pins U1-10)
@@ -1305,10 +1305,10 @@
       (pins U1-9)
     )
     (net /MBUS_SCK
-      (pins U2-9 U6-6 U8-6 U9-6 W11-1)
+      (pins U2-12 U6-6 U8-6 U9-6 W11-1)
     )
     (net /MBUS_MOSI
-      (pins U2-4 U6-5 U8-5 U9-5 W10-1)
+      (pins U2-13 U6-5 U8-5 U9-5 W10-1)
     )
     (net "Net-(U7-Pad20)"
       (pins U7-20)
@@ -1350,8 +1350,8 @@
       "Net-(R13-Pad1)" "Net-(R16-Pad1)" "Net-(SW1-Pad2)" "Net-(SW10-Pad2)"
       "Net-(SW11-Pad2)" "Net-(SW12-Pad2)" "Net-(SW13-Pad2)" "Net-(SW14-Pad2)"
       "Net-(SW15-Pad2)" "Net-(SW16-Pad2)" "Net-(U1-Pad10)" "Net-(U1-Pad13)"
-      "Net-(U1-Pad9)" "Net-(U2-Pad28)" "Net-(U2-Pad29)" "Net-(U2-Pad30)" "Net-(U2-Pad31)"
-      "Net-(U7-Pad19)" "Net-(U7-Pad20)" "Net-(U8-Pad3)" "Net-(U9-Pad3)" VCC
+      "Net-(U1-Pad9)" "Net-(U2-Pad28)" "Net-(U2-Pad29)" "Net-(U7-Pad19)" "Net-(U7-Pad20)"
+      "Net-(U8-Pad3)" "Net-(U9-Pad3)" VCC
       (circuit
         (use_via Via[0-1]_800:400_um)
       )
@@ -1362,6 +1362,16 @@
     )
   )
   (wiring
+    (wire (path B.Cu 250  85150 -52700  85150 -52300  87050 -50400)(net VCC)(type protect))
+    (wire (path B.Cu 250  86500 -55000  86000 -55000  85150 -54150  85150 -52700)(net VCC)(type protect))
+    (wire (path F.Cu 250  96640 -48420  96980 -48420  99200 -46200)(net VCC)(type protect))
+    (wire (path F.Cu 250  104500 -27100  105600 -27100)(net VCC)(type protect))
+    (wire (path F.Cu 250  96200 -46200  94100 -44100)(net VCC)(type protect))
+    (wire (path F.Cu 250  99200 -46200  96200 -46200)(net VCC)(type protect))
+    (wire (path F.Cu 250  105600 -46200  99200 -46200)(net VCC)(type protect))
+    (wire (path F.Cu 250  106200 -45600  105600 -46200)(net VCC)(type protect))
+    (wire (path F.Cu 250  106200 -27700  106200 -45600)(net VCC)(type protect))
+    (wire (path F.Cu 250  105600 -27100  106200 -27700)(net VCC)(type protect))
     (wire (path F.Cu 250  104500 -27100  102750 -27100)(net VCC)(type protect))
     (wire (path B.Cu 250  102750 -27100  101800 -27100)(net VCC)(type protect))
     (wire (path F.Cu 250  55700 -79800  57400 -79800)(net VCC)(type protect))
@@ -1393,23 +1403,35 @@
     (wire (path B.Cu 250  61200 -42000  61200 -42800)(net VCC)(type protect))
     (wire (path F.Cu 250  56950 -47200  58400 -47200)(net VCC)(type protect))
     (wire (path B.Cu 250  58400 -47200  59200 -47200)(net VCC)(type protect))
+    (wire (path F.Cu 250  40500 -55650  40500 -57550)(net GND)(type protect))
+    (wire (path F.Cu 250  42900 -58850  42850 -58850)(net "Net-(C5-Pad1)")(type protect))
+    (wire (path F.Cu 250  42300 -54400  41450 -53550)(net "Net-(C5-Pad1)")(type protect))
+    (wire (path F.Cu 250  42300 -58300  42300 -54400)(net "Net-(C5-Pad1)")(type protect))
+    (wire (path F.Cu 250  42850 -58850  42300 -58300)(net "Net-(C5-Pad1)")(type protect))
+    (wire (path F.Cu 250  40350 -58850  41650 -58850)(net "Net-(C5-Pad1)")(type protect))
     (wire (path F.Cu 250  41150.2 -57550  41150.2 -58350.2  41650 -58850)(net "Net-(C5-Pad1)")(type protect))
     (wire (path F.Cu 250  39849.8 -57550  39849.8 -58349.8  40350 -58850)(net "Net-(C5-Pad1)")(type protect))
     (wire (path F.Cu 250  44000 -57600  44000 -57900  44950 -58850)(net "Net-(C5-Pad1)")(type protect))
-    (wire (path F.Cu 250  37660 -62900  37660 -60190  39000 -58850  40350 -58850  41650 -58850
-            44950 -58850)(net "Net-(C5-Pad1)")(type protect))
+    (wire (path F.Cu 250  37660 -62900  37660 -60190  39000 -58850  40350 -58850)(net "Net-(C5-Pad1)")(type protect))
+    (wire (path F.Cu 250  41650 -58850  42900 -58850  44950 -58850)(net "Net-(C5-Pad1)")(type protect))
     (wire (path F.Cu 250  46535 -59385  46535 -60400)(net "Net-(C5-Pad1)")(type protect))
     (wire (path F.Cu 250  46000 -58850  46535 -59385)(net "Net-(C5-Pad1)")(type protect))
     (wire (path F.Cu 250  44950 -58850  46000 -58850)(net "Net-(C5-Pad1)")(type protect))
     (wire (path F.Cu 250  41200.3 -57600  41150.2 -57550)(net "Net-(C5-Pad1)")(type protect))
-    (wire (path F.Cu 250  37000 -57600  38100 -57600)(net "Net-(C12-Pad1)")(type protect))
-    (wire (path F.Cu 250  41150.2 -56249.8  41150.2 -55650)(net "Net-(C12-Pad1)")(type protect))
-    (wire (path F.Cu 250  40800 -56600  41150.2 -56249.8)(net "Net-(C12-Pad1)")(type protect))
-    (wire (path F.Cu 250  39100 -56600  40800 -56600)(net "Net-(C12-Pad1)")(type protect))
-    (wire (path F.Cu 250  38100 -57600  39100 -56600)(net "Net-(C12-Pad1)")(type protect))
+    (wire (path F.Cu 250  41150.2 -55650  41150.2 -54850.2)(net "Net-(C12-Pad1)")(type protect))
+    (wire (path F.Cu 250  37900 -57600  37000 -57600)(net "Net-(C12-Pad1)")(type protect))
+    (wire (path F.Cu 250  38300 -57200  37900 -57600)(net "Net-(C12-Pad1)")(type protect))
+    (wire (path F.Cu 250  38300 -52700  38300 -57200)(net "Net-(C12-Pad1)")(type protect))
+    (wire (path F.Cu 250  39000 -52000  38300 -52700)(net "Net-(C12-Pad1)")(type protect))
+    (wire (path F.Cu 250  40000 -52000  39000 -52000)(net "Net-(C12-Pad1)")(type protect))
+    (wire (path F.Cu 250  40500 -52500  40000 -52000)(net "Net-(C12-Pad1)")(type protect))
+    (wire (path F.Cu 250  40500 -54200  40500 -52500)(net "Net-(C12-Pad1)")(type protect))
+    (wire (path F.Cu 250  41150.2 -54850.2  40500 -54200)(net "Net-(C12-Pad1)")(type protect))
+    (wire (path F.Cu 250  32900 -59300  35300 -59300  37000 -57600)(net "Net-(C12-Pad1)")(type protect))
     (wire (path F.Cu 250  39550 -53550  39550 -54500)(net "Net-(L1-Pad2)")(type protect))
     (wire (path F.Cu 250  39849.8 -54799.8  39849.8 -55650)(net "Net-(L1-Pad2)")(type protect))
     (wire (path F.Cu 250  39550 -54500  39849.8 -54799.8)(net "Net-(L1-Pad2)")(type protect))
+    (wire (path F.Cu 250  32900 -68700  43100 -68700  44600 -70200)(net "Net-(P2-Pad3)")(type protect))
     (wire (path F.Cu 250  90250 -105700  90050 -105700  87390 -108360)(net /KEYM_ROW5)(type protect))
     (wire (path F.Cu 250  95010 -108360  87390 -108360)(net /KEYM_ROW5)(type protect))
     (wire (path F.Cu 250  87390 -181160  95010 -181160)(net /KEYM_ROW5)(type protect))

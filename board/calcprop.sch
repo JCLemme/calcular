@@ -78,31 +78,31 @@ F 3 "" H 14450 1750 50  0000 C CNN
 	1    14800 1800
 	1    0    0    -1  
 $EndComp
-Text Label 1150 2100 0    60   ~ 0
-MBUS_MISO
-Text Label 1150 2200 0    60   ~ 0
-MBUS_MOSI
-Text Label 1150 2700 0    60   ~ 0
-MBUS_SCK
-Text Label 1150 2800 0    60   ~ 0
-MBUS_CS0
-Text Label 1150 2900 0    60   ~ 0
-MBUS_CS1
-Text Label 2250 4000 1    60   ~ 0
-MBUS_CS2
-Text Label 2350 4000 1    60   ~ 0
-PBUS_MISO
 Text Label 2450 4000 1    60   ~ 0
-PBUS_MOSI
-Text Label 2550 4000 1    60   ~ 0
-PBUS_SCK
+MBUS_MISO
+Text Label 2350 4000 1    60   ~ 0
+MBUS_MOSI
+Text Label 2250 4000 1    60   ~ 0
+MBUS_SCK
+Text Label 1150 2900 0    60   ~ 0
+MBUS_CS0
 Text Label 2650 4000 1    60   ~ 0
-PBUS_CS0
+MBUS_CS1
+Text Label 2550 4000 1    60   ~ 0
+MBUS_CS2
 Text Label 2950 4000 1    60   ~ 0
-PBUS_CS1
+PBUS_MISO
 Text Label 3050 4000 1    60   ~ 0
-PBUS_CS2
+PBUS_MOSI
 Text Label 3150 4000 1    60   ~ 0
+PBUS_SCK
+Text Label 3250 4000 1    60   ~ 0
+PBUS_CS0
+Text Label 4350 2700 2    60   ~ 0
+PBUS_CS1
+Text Label 4350 2800 2    60   ~ 0
+PBUS_CS2
+Text Label 4350 2600 2    60   ~ 0
 PBUS_CS3
 $Comp
 L 74LS595 U1
@@ -115,23 +115,23 @@ F 3 "" H 1900 9150 50  0000 C CNN
 	1    1900 9150
 	1    0    0    -1  
 $EndComp
-Text Label 1150 1900 0    60   ~ 0
+Text Label 1150 2800 0    60   ~ 0
 KEYM_ROW5
-Text Label 1150 2000 0    60   ~ 0
+Text Label 1150 2700 0    60   ~ 0
 KEYM_ROW4
-Text Label 4350 2900 2    60   ~ 0
+Text Label 1150 2200 0    60   ~ 0
 KEYM_ROW3
-Text Label 4350 2800 2    60   ~ 0
+Text Label 1150 2100 0    60   ~ 0
 KEYM_ROW2
-Text Label 4350 2700 2    60   ~ 0
+Text Label 1150 2000 0    60   ~ 0
 KEYM_ROW1
-Text Label 4350 2600 2    60   ~ 0
+Text Label 1150 1900 0    60   ~ 0
 KEYM_ROW0
-Text Label 4350 2100 2    60   ~ 0
+Text Label 3050 800  3    60   ~ 0
 KEYM_LAT
-Text Label 4350 2000 2    60   ~ 0
+Text Label 2950 800  3    60   ~ 0
 KEYM_CLK
-Text Label 4350 1900 2    60   ~ 0
+Text Label 2850 800  3    60   ~ 0
 KEYM_DAT
 Text Label 2350 800  3    60   ~ 0
 COMM_TX
@@ -903,13 +903,13 @@ F 3 "" H 13500 8450 50  0000 C CNN
 	1    13500 8450
 	-1   0    0    1   
 $EndComp
-Text Label 2850 800  3    60   ~ 0
+Text Label 4350 2000 2    60   ~ 0
 DBUS_SDA
-Text Label 2950 800  3    60   ~ 0
+Text Label 4350 2100 2    60   ~ 0
 DBUS_SCL
-Text Label 3250 800  3    60   ~ 0
+Text Label 4350 1900 2    60   ~ 0
 DBUS_A0
-Text Label 3050 800  3    60   ~ 0
+Text Label 3150 800  3    60   ~ 0
 DBUS_CS
 Text Label 10100 3250 0    60   ~ 0
 DBUS_SDA
@@ -1317,7 +1317,7 @@ NoConn ~ 12050 2950
 NoConn ~ 12050 3050
 Text Label 10100 2350 0    60   ~ 0
 DBUS_RST
-Text Label 3150 800  3    60   ~ 0
+Text Label 3250 800  3    60   ~ 0
 DBUS_RST
 Text Label 10700 4500 0    60   ~ 0
 DBUS_CS
@@ -1329,7 +1329,7 @@ Text Label 10700 5100 0    60   ~ 0
 DBUS_SDA
 Text Label 10700 5300 0    60   ~ 0
 DBUS_SCL
-Text Label 3250 4000 1    60   ~ 0
+Text Label 4350 2900 2    60   ~ 0
 PBUS_CS4
 Text Label 8850 4800 2    60   ~ 0
 PBUS_CS4
@@ -2010,29 +2010,21 @@ F 3 "" H 3850 2750 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	1750 2100 1150 2100
-Wire Wire Line
-	1750 2200 1150 2200
-Wire Wire Line
-	1750 2700 1150 2700
-Wire Wire Line
-	1750 2800 1150 2800
-Wire Wire Line
-	1750 2900 1150 2900
-Wire Wire Line
-	2250 3400 2250 4000
-Wire Wire Line
-	3150 1400 3150 800 
-Wire Wire Line
-	3250 1400 3250 800 
+	2450 3400 2450 4000
 Wire Wire Line
 	2350 3400 2350 4000
 Wire Wire Line
-	2450 3400 2450 4000
+	2250 3400 2250 4000
+Wire Wire Line
+	1750 2900 1150 2900
+Wire Wire Line
+	2650 3400 2650 4000
 Wire Wire Line
 	2550 3400 2550 4000
 Wire Wire Line
-	2650 3400 2650 4000
+	3250 1400 3250 800 
+Wire Wire Line
+	3750 1900 4350 1900
 Wire Wire Line
 	2950 3400 2950 4000
 Wire Wire Line
@@ -2042,6 +2034,14 @@ Wire Wire Line
 Wire Wire Line
 	3250 3400 3250 4000
 Wire Wire Line
+	3750 2700 4350 2700
+Wire Wire Line
+	3750 2800 4350 2800
+Wire Wire Line
+	3750 2600 4350 2600
+Wire Wire Line
+	3750 2900 4350 2900
+Wire Wire Line
 	2250 800  2250 1400
 Wire Wire Line
 	2350 1400 2350 800 
@@ -2050,33 +2050,33 @@ Wire Wire Line
 Wire Wire Line
 	2550 1400 2550 800 
 Wire Wire Line
+	3750 2000 4350 2000
+Wire Wire Line
+	3750 2100 4350 2100
+Wire Wire Line
+	3150 1400 3150 800 
+Wire Wire Line
 	2850 1400 2850 800 
-Wire Wire Line
-	2950 1400 2950 800 
-Wire Wire Line
-	3050 1400 3050 800 
-Wire Wire Line
-	3750 1900 4350 1900
 Wire Wire Line
 	3750 2300 4750 2300
 Wire Wire Line
 	3750 2400 4750 2400
 Wire Wire Line
-	3750 2000 4350 2000
+	2950 1400 2950 800 
 Wire Wire Line
-	3750 2100 4350 2100
+	3050 1400 3050 800 
 Wire Wire Line
-	3750 2600 4350 2600
-Wire Wire Line
-	3750 2700 4350 2700
-Wire Wire Line
-	3750 2800 4350 2800
-Wire Wire Line
-	3750 2900 4350 2900
+	1750 1900 1150 1900
 Wire Wire Line
 	1750 2000 1150 2000
 Wire Wire Line
-	1750 1900 1150 1900
+	1750 2100 1150 2100
+Wire Wire Line
+	1750 2200 1150 2200
+Wire Wire Line
+	1750 2700 1150 2700
+Wire Wire Line
+	1750 2800 1150 2800
 Wire Wire Line
 	1200 8700 650  8700
 Wire Wire Line
