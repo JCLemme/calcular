@@ -1,11 +1,11 @@
-(kicad_pcb (version 20160815) (host pcbnew no-vcs-found-7475~57~ubuntu16.10.1)
+(kicad_pcb (version 20160815) (host pcbnew no-vcs-found-7415~56~ubuntu16.10.1)
 
   (general
     (links 418)
     (no_connects 0)
     (area 20.524999 16.6425 109.45 189.875001)
     (thickness 1.6)
-    (drawings 12)
+    (drawings 23)
     (tracks 1583)
     (zones 0)
     (modules 126)
@@ -14,8 +14,8 @@
 
   (page A4)
   (layers
-    (0 F.Cu signal)
-    (31 B.Cu signal)
+    (0 F.Cu signal hide)
+    (31 B.Cu signal hide)
     (32 B.Adhes user)
     (33 F.Adhes user)
     (34 B.Paste user)
@@ -4256,6 +4256,17 @@
       (net 56 /MBUS_CS2))
   )
 
+  (gr_circle (center 25.25 43.05) (end 25.2 43.7) (layer F.SilkS) (width 0.2) (tstamp 58802646))
+  (gr_circle (center 44.6 73.1) (end 44.95 73.7) (layer F.SilkS) (width 0.2))
+  (gr_circle (center 37.65 74.85) (end 38.2 75.25) (layer F.SilkS) (width 0.2))
+  (gr_circle (center 49.55 60.2) (end 49.5 60.85) (layer F.SilkS) (width 0.2) (tstamp 58802624))
+  (gr_circle (center 38.4 59.05) (end 38.8 59.4) (layer F.SilkS) (width 0.2))
+  (gr_circle (center 82.1 27.3) (end 82.75 27.8) (layer F.SilkS) (width 0.2))
+  (gr_circle (center 69.6 65.65) (end 69.55 66.3) (layer F.SilkS) (width 0.2) (tstamp 588025F9))
+  (gr_circle (center 75.2 63.2) (end 75.15 63.85) (layer F.SilkS) (width 0.2) (tstamp 588025F1))
+  (gr_circle (center 57.65 60.85) (end 57.6 61.5) (layer F.SilkS) (width 0.2))
+  (gr_circle (center 56.7 52.15) (end 57.25 52.6) (layer F.SilkS) (width 0.2))
+  (gr_circle (center 55.9 83.7) (end 56.6 84.05) (layer F.SilkS) (width 0.2))
   (gr_line (start 99.1 83) (end 99.1 189.8) (angle 90) (layer Edge.Cuts) (width 0.15))
   (gr_line (start 28.9 83) (end 28.9 189.8) (angle 90) (layer Edge.Cuts) (width 0.15))
   (gr_line (start 20.7 74.8) (end 28.9 83) (angle 90) (layer Edge.Cuts) (width 0.15))
@@ -5857,4 +5868,26 @@
   (segment (start 58.0506 34.3) (end 62.8 39.0494) (width 0.25) (layer F.Cu) (net 90))
   (segment (start 50.1489 34.3) (end 58.0506 34.3) (width 0.25) (layer F.Cu) (net 90))
 
+  (zone (net 2) (net_name GND) (layer F.Cu) (tstamp 588021F1) (hatch edge 0.508)
+    (connect_pads (clearance 0.508))
+    (min_thickness 0.254)
+    (fill (arc_segments 16) (thermal_gap 0.508) (thermal_bridge_width 0.508))
+    (polygon
+      (pts
+        (xy 107.2 74.75) (xy 99 82.95) (xy 99 189.7) (xy 29 189.7) (xy 29 82.95)
+        (xy 20.8 74.75) (xy 20.8 18.3) (xy 107.2 18.3)
+      )
+    )
+  )
+  (zone (net 2) (net_name GND) (layer B.Cu) (tstamp 58802503) (hatch edge 0.508)
+    (connect_pads (clearance 0.508))
+    (min_thickness 0.254)
+    (fill (arc_segments 16) (thermal_gap 0.508) (thermal_bridge_width 0.508))
+    (polygon
+      (pts
+        (xy 107.2 74.75) (xy 99 82.95) (xy 99 189.7) (xy 29 189.7) (xy 29 82.95)
+        (xy 20.8 74.75) (xy 20.8 18.3) (xy 107.2 18.3)
+      )
+    )
+  )
 )
