@@ -26,5 +26,9 @@ int i = 0;
 int j = 0;
 int l = 1;
 
+//Mode Functions
+int RadDeg = 1;
+double pi = 3.14159265358979323846264;
+
 
 #endif /* RPN_h */
