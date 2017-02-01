@@ -494,55 +494,68 @@ void Interpreter ()
         }
         if (tok == 'h')
         {
-            
+            Sin();
+            i = 0;
         }
         if (tok == 'i')
         {
-            
+            Cos();
+            i = 0;
         }
         if (tok == 'j')
         {
-            
+            Tan();
+            i = 0;
         }
         if (tok == 'k')
         {
-            
+            Sec();
+            i = 0;
         }
         if (tok == 'l')
         {
-            
+            Csc();
+            i = 0;
         }
         if (tok == 'm')
         {
-            
+            Cot();
+            i = 0;
         }
         if (tok == 'n')
         {
-            
+            Arcsin();
+            i = 0;
         }
         if (tok == 'o')
         {
-            
+            Arccos();
+            i = 0;
         }
         if (tok == 'p')
         {
-            
+            Arctan();
+            i = 0;
         }
         if (tok == 'q')
         {
-            
+            Arcsec();
+            i = 0;
         }
         if (tok == 'r')
         {
-            
+            Arccsc();
+            i = 0;
         }
         if (tok == 's')
         {
-            
+            Arccot();
+            i = 0;
         }
         if (tok == 't')
         {
-            
+            ToggleSign();
+            i = 0;
         }
         if (tok == 'u')
         {
@@ -808,14 +821,6 @@ void UpdateKernel ()
     int b;
 }
 
-void UpdateCalculator ()
-{
-    /*
-     perform indicated math functions
-     */
-    int d;
-}
-
 int main (void)
 {
     while (1)
@@ -823,6 +828,5 @@ int main (void)
         UpdateKeyboard();
         //UpdateDisplay();
         //UpdateKernel();
-        //UpdateCalculator();
     }
 }
