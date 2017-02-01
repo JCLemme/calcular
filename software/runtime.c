@@ -24,11 +24,13 @@ int cnt = 0;
 char number[64];
 char text[64];
 int text_cnt = 0;
+char input_type[64];
 
 int button;
 double q; //number to push from buttons
 double g; //used in operations to push new numbers
 double x; //variable on calculator
+int i; //used for reading string
 
 char zero = '0';
 char one = '1';
@@ -41,6 +43,35 @@ char seven = '7';
 char eight = '8';
 char nine = '9';
 char decimal = '.';
+char add = '+';
+char subtract = '-';
+char multiply = '*';
+char divide = '/';
+char power = '^';
+char X = 'x';
+char space = ' ';
+char logarithm = 'a';
+char ln = 'b';
+char root = 'c';
+char swap = 'd';
+char drop = 'e';
+char roll = 'f';
+char copy = 'g';
+char sine = 'h';
+char cosine = 'i';
+char tangent = 'j';
+char sec = 'k';
+char csc = 'l';
+char cot = 'm';
+char arcsin = 'n';
+char arccos = 'o';
+char arctan = 'p';
+char arcsec = 'q';
+char arccsc = 'r';
+char arccot = 's';
+char togglesign = 't';
+char store = 'u';
+
 
 
 //Mode Settings
@@ -343,7 +374,7 @@ void Arccsc ()
 
 void Arccot ()
 {
-    double f= pop();
+    double f = pop();
     double y = atan(1/f);
     if (RadDeg == 0)
     {
@@ -364,87 +395,235 @@ void ToggleSign ()
     printf("g = %lf\n", g);
 }
 
+int GetButton ()
+{
+    int bttn;
+    scanf("%i", &bttn);
+    return bttn;
+}
+
+void Store ()
+{
+    double a = pop();
+    x = a;
+}
+
+void Interpreter ()
+{
+    for (int t = 0; t < strlen(input_type); t++)
+    {
+        char tok = input_type[t];
+        
+        if (isdigit(tok) || tok == '.')
+        {
+            strncat(number, &tok, 1);
+            i = 1;
+        }
+        if (tok == ' ' && i == 1)
+        {
+            q = atof(number);
+            printf("q = %lf\n", q);
+            push(w);
+            memset(number, 0, sizeof number);
+        }
+        
+        if (tok == 'x')
+        {
+            push(x);
+            i = 0;
+        }
+        if (tok == '+')
+        {
+            Add();
+            i = 0;
+        }
+        if (tok == '-')
+        {
+            Subtract();
+            i = 0;
+        }
+        if (tok == '*')
+        {
+            Multiply();
+            i = 0;
+        }
+        if (tok == '/')
+        {
+            Divide();
+            i = 0;
+        }
+        if (tok == '^')
+        {
+            Power();
+            i = 0;
+        }
+        if (tok == 'a')
+        {
+            Log();
+            i = 0;
+        }
+        if (tok == 'b')
+        {
+            Ln();
+            i = 0;
+        }
+        if (tok == 'c')
+        {
+            Root();
+            i = 0;
+        }
+        if (tok == 'd')
+        {
+            Swap();
+            i = 0;
+        }
+        if (tok == 'e')
+        {
+            Drop();
+            i = 0;
+        }
+        if (tok == 'f')
+        {
+            Roll();
+            i = 0;
+        }
+        if (tok == 'g')
+        {
+            Copy();
+            i = 0;
+        }
+        if (tok == 'h')
+        {
+            
+        }
+        if (tok == 'i')
+        {
+            
+        }
+        if (tok == 'j')
+        {
+            
+        }
+        if (tok == 'k')
+        {
+            
+        }
+        if (tok == 'l')
+        {
+            
+        }
+        if (tok == 'm')
+        {
+            
+        }
+        if (tok == 'n')
+        {
+            
+        }
+        if (tok == 'o')
+        {
+            
+        }
+        if (tok == 'p')
+        {
+            
+        }
+        if (tok == 'q')
+        {
+            
+        }
+        if (tok == 'r')
+        {
+            
+        }
+        if (tok == 's')
+        {
+            
+        }
+        if (tok == 't')
+        {
+            
+        }
+        if (tok == 'u')
+        {
+            Store();
+            i = 0;
+        }
+    }
+}
+
 //runtime functions-------------------------------------------
 void NormalButton (int btn)
 {
+    printf("button = %i\n", btn);
     switch (btn)
     {
-        //NUMBERS--------------------------------------------
-        case (8):
-            //get value for x
-            scanf("Enter x: %lf", &x);
-            push(x);
+            //NUMBERS--------------------------------------------
+        case (8): strncat(input_type, &X, 1);
             break;
-        case (13): strncat(number, &seven, 1);
+        case (13): strncat(input_type, &seven, 1);
             break;
-        case (14): strncat(number, &four, 1);
+        case (14): strncat(input_type, &four, 1);
             break;
-        case (15): strncat(number, &one, 1);
+        case (15): strncat(input_type, &one, 1);
             break;
-        case (16): strncat(number, &zero, 1);
+        case (16): strncat(input_type, &zero, 1);
             break;
-        case (21): strncat(number, &eight, 1);
+        case (21): strncat(input_type, &eight, 1);
             break;
-        case (22): strncat(number, &five, 1);
+        case (22): strncat(input_type, &five, 1);
             break;
-        case (23): strncat(number, &two, 1);
+        case (23): strncat(input_type, &two, 1);
             break;
-        case (24): strncat(number, &decimal, 1);
+        case (24): strncat(input_type, &decimal, 1);
             break;
-        case (29): strncat(number, &nine, 1);
+        case (29): strncat(input_type, &nine, 1);
             break;
-        case (30): strncat(number, &six, 1);
+        case (30): strncat(input_type, &six, 1);
             break;
-        case (31): strncat(number, &three, 1);
+        case (31): strncat(input_type, &three, 1);
             break;
-        case (32):
-            q = atof(number);
-            printf("q = %lf\n", q);
-            push(q);
-            memset(number,0,sizeof number);
+        case (32): strncat(input_type, &space, 1);
             break;
-        case (40):
-            q = atof(number);
-            printf("q = %lf\n", q);
-            push(q);
-            memset(number,0,sizeof number);
+        case (40): printf("%s\n", input_type);
+            Interpreter();
             break;
-        //OPERATIONS-----------------------------------
-        case (2): Swap();
+            //OPERATIONS-----------------------------------
+        case (2): strncat(input_type, &swap, 1);
             break;
-        case (4): Root();
+        case (4): strncat(input_type, &root, 1);
             break;
-        case (5): Log();
+        case (5): strncat(input_type, &logarithm, 1);
             break;
-        case (6): Ln();
+        case (6): strncat(input_type, &ln, 1);
             break;
-        case (10): Copy();
+        case (10): strncat(input_type, &copy, 1);
             break;
-        case (11): Sin();
+        case (11): strncat(input_type, &sine, 1);
             break;
-        case (12): Arcsin();
+        case (12): strncat(input_type, &arcsin, 1);
             break;
-        case (18): Drop();
+        case (18): strncat(input_type, &drop, 1);
             break;
-        case (19): Cos();
+        case (19): strncat(input_type, &cosine, 1);
             break;
-        case (20): Arccos();
+        case (20): strncat(input_type, &arccos, 1);
             break;
-        case (26): Roll();
+        case (26): strncat(input_type, &roll, 1);
             break;
-        case (27): Tan();
+        case (27): strncat(input_type, &tangent, 1);
             break;
-        case (28): Arctan();
+        case (28): strncat(input_type, &arctan, 1);
             break;
-        case (35): Power();
+        case (35): strncat(input_type, &power, 1);
             break;
-        case (36): Add();
+        case (36): strncat(input_type, &add, 1);
             break;
-        case (37): Subtract();
+        case (37): strncat(input_type, &subtract, 1);
             break;
-        case (38): Multiply();
+        case (38): strncat(input_type, &multiply, 1);
             break;
-        case (39): Divide();
+        case (39): strncat(input_type, &divide, 1);
             break;
     }
 }
@@ -453,19 +632,21 @@ void SecondButton (int btn)
 {
     switch (btn)
     {
-        case (11): Csc();
+        case (8): strncat(input_type, &store, 1);
             break;
-        case (12): Arccsc();
+        case (11): strncat(input_type, &csc, 1);
             break;
-        case (19): Sec();
+        case (12): strncat(input_type, &arccsc, 1);
             break;
-        case (20): Arcsec();
+        case (19): strncat(input_type, &sec, 1);
             break;
-        case (27): Cot();
+        case (20): strncat(input_type, &arcsec, 1);
             break;
-        case (28): Arccot();
+        case (27): strncat(input_type, &cot, 1);
             break;
-        case (32): ToggleSign();
+        case (28): strncat(input_type, &arccot, 1);
+            break;
+        case (32): strncat(input_type, &togglesign, 1);
             break;
     }
 }
@@ -508,7 +689,7 @@ void AlphaButton (int btn)
         case (14): text[text_cnt] = 'V';
             text_cnt++;
             break;
-        case (15): text[text_cnt] = ''';
+        case (15): text[text_cnt] = '\'';
             text_cnt++;
             break;
         case (18): text[text_cnt] = 'C';
@@ -536,6 +717,7 @@ void AlphaButton (int btn)
             text_cnt++;
             break;
         case (27): text[text_cnt] = 'I';
+            //printf("%s\n", text);
             text_cnt++;
             break;
         case (28): text[text_cnt] = 'N';
@@ -546,32 +728,36 @@ void AlphaButton (int btn)
             break;
         case (30): text[text_cnt] = 'X';
             text_cnt++;
+            //printf("%s\n", text);
             break;
         case (31): text[text_cnt] = ',';
             text_cnt++;
             break;
-        case (32): text[text_cnt]
+        case (32): text[text_cnt] = ' ';
+            //printf("%s\n", text);
+            text_cnt++;
             break;
-        case (34):
+        case (34): text[text_cnt] = 'E';
+            text_cnt++;
             break;
-        case (35):
+        case (35): text[text_cnt] = 'J';
+            text_cnt++;
             break;
-        case (36):
+        case (36): text[text_cnt] = 'O';
+            text_cnt++;
             break;
-        case (37):
+        case (37): text[text_cnt] = 'T';
+            text_cnt++;
             break;
-        case (38):
-            break;
-        case (39):
+        case (38): text[text_cnt] = 'Y';
+            text_cnt++;
             break;
     }
 }
 
 void UpdateKeyboard ()
 {
-    int button;
-    scanf("%i", &button);
-    //get button #
+    int button = GetButton();
     if (button == 43)
     {
         w = 1;
