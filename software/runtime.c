@@ -45,34 +45,34 @@ char seven = '7';
 char eight = '8';
 char nine = '9';
 char decimal = '.';
-char add = '+';
-char subtract = '-';
-char multiply = '*';
-char divide = '/';
-char power = '^';
-char X = 'x';
+char add[] = "add";
+char subtract[] = "subtract";
+char multiply[] = "multiply";
+char divide[] = "divide";
+char power[] = "power";
+char X[] = "varx";
 char space = ' ';
-char logarithm[3] = "log";
-char ln[2] = "ln";
-char root[4] = "root";
-char swap[4] = "swap";
-char drop[4] = "drop";
-char roll[4] = "roll";
-char copy[4] = "copy";
-char sine[3] = "sin";
-char cosine[3] = "cos";
-char tangent[3] = "tan";
-char sec[3] = "sec";
-char csc[3] = "csc";
-char cot[3] = "cot";
-char arcsin[6] = "arcsin";
-char arccos[6] = "arccos";
-char arctan[6] = "arctan";
-char arcsec[6] = "arcsec";
-char arccsc[6] = "arccsc";
-char arccot[6] = "arccot";
-char togglesign[10] = "togglesign";
-char store[5] = "store";
+char logarithm[] = "log";
+char ln[] = "ln";
+char root[] = "root";
+char swap[] = "swap";
+char drop[] = "drop";
+char roll[] = "roll";
+char copy[] = "copy";
+char sine[] = "sin";
+char cosine[] = "cos";
+char tangent[] = "tan";
+char sec[] = "sec";
+char csc[] = "csc";
+char cot[] = "cot";
+char arcsin[] = "arcsin";
+char arccos[] = "arccos";
+char arctan[] = "arctan";
+char arcsec[] = "arcsec";
+char arccsc[] = "arccsc";
+char arccot[] = "arccot";
+char togglesign[] = "togglesign";
+char store[] = "store";
 
 //Mode Settings
 int RadDeg = 1;
@@ -408,157 +408,157 @@ void Store ()
     x = a;
 }
 
+void FunctiontoGraph ()
+{
+    
+}
+
 void Interpreter ()
 {
     for (int t = 0; t < strlen(input_type); t++)
     {
         char tok = input_type[t];
         
-        if (isdigit(tok) || tok == '.')
-        {
-            strncat(number, &tok, 1);
-            i = 1;
-        }
-        if (tok == ' ' && i == 1)
-        {
-            q = atof(number);
-            printf("q = %lf\n", q);
-            push(q);
-            memset(number, 0, sizeof number);
-        }
-        if (!isdigit(tok) && tok != ' ')
+        if (tok != ' ')
         {
             strncat(operation, &tok, 1);
-            i = 0;
         }
-        if (strcmp(operation, logarithm) == 0)
+        if (tok == ' ')
         {
-            Log();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, ln) == 0)
-        {
-            Ln();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, root) == 0)
-        {
-            Root();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, swap) == 0)
-        {
-            Swap();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, drop) == 0)
-        {
-            Drop();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, roll) == 0)
-        {
-            Roll();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, copy) == 0)
-        {
-            Copy();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, sine) == 0)
-        {
-            Sin();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, cosine) == 0)
-        {
-            Cos();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, tangent) == 0)
-        {
-            Tan();memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, sec) == 0)
-        {
-            Sec();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, csc) == 0)
-        {
-            Csc();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, cot) == 0)
-        {
-            Cot();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, arcsin) == 0)
-        {
-            Arcsin();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, arccos) == 0)
-        {
-            Arccos();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, arctan) == 0)
-        {
-            Arctan();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, arcsec) == 0)
-        {
-            Arcsec();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, arccsc) == 0)
-        {
-            Arccsc();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, arccot) == 0)
-        {
-            Arccot();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, togglesign) == 0)
-        {
-            ToggleSign();
-            memset(operation, 0, sizeof operation);
-        }
-        if (strcmp(operation, store) == 0)
-        {
-            Store();
-            memset(operation, 0, sizeof operation);
-        }
-        if (operation[0] == add)
-        {
-            Add();
-            memset(operation, 0, sizeof operation);
-        }
-        if (operation[0] == subtract)
-        {
-            Subtract();
-            memset(operation, 0, sizeof operation);
-        }
-        if (operation[0] == multiply)
-        {
-            Multiply();
-            memset(operation, 0, sizeof operation);
-        }
-        if (operation[0] == divide)
-        {
-            Divide();
-            memset(operation, 0, sizeof operation);
-        }
-        if (operation[0] == power);
-        {
-            Power();
-            memset(operation, 0, sizeof operation);
+            if (isdigit(tok) || tok == '.')
+            {
+                q = atof(operation);
+                push(q);
+            }
+            if (strcmp(operation, logarithm) == 0)
+            {
+                Log();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, ln) == 0)
+            {
+                Ln();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, root) == 0)
+            {
+                Root();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, swap) == 0)
+            {
+                Swap();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, drop) == 0)
+            {
+                Drop();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, roll) == 0)
+            {
+                Roll();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, copy) == 0)
+            {
+                Copy();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, sine) == 0)
+            {
+                Sin();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, cosine) == 0)
+            {
+                Cos();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, tangent) == 0)
+            {
+                Tan();memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, sec) == 0)
+            {
+                Sec();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, csc) == 0)
+            {
+                Csc();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, cot) == 0)
+            {
+                Cot();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, arcsin) == 0)
+            {
+                Arcsin();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, arccos) == 0)
+            {
+                Arccos();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, arctan) == 0)
+            {
+                Arctan();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, arcsec) == 0)
+            {
+                Arcsec();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, arccsc) == 0)
+            {
+                Arccsc();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, arccot) == 0)
+            {
+                Arccot();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, togglesign) == 0)
+            {
+                ToggleSign();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, store) == 0)
+            {
+                Store();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, add) == 0)
+            {
+                Add();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, subtract) == 0)
+            {
+                Subtract();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, multiply) == 0)
+            {
+                Multiply();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, divide) == 0)
+            {
+                Divide();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, power) == 0);
+            {
+                Power();
+                memset(operation, 0, sizeof operation);
+            }
         }
     }
     memset(input_type, 0, sizeof input_type);
@@ -570,8 +570,6 @@ void NormalButton (int btn)
     switch (btn)
     {
             //NUMBERS--------------------------------------------
-        case (8): strncat(input_type, &X, 1);
-            break;
         case (13): strncat(input_type, &seven, 1);
             break;
         case (14): strncat(input_type, &four, 1);
@@ -596,7 +594,8 @@ void NormalButton (int btn)
             break;
         case (32): strncat(input_type, &space, 1);
             break;
-        case (40): printf("%s\n", input_type);
+        case (40): strncat(input_type, &space, 1);
+            printf("%s\n", input_type);
             Interpreter();
             break;
             //OPERATIONS-----------------------------------
@@ -607,6 +606,8 @@ void NormalButton (int btn)
         case (5): strncat(input_type, logarithm, 3);
             break;
         case (6): strncat(input_type, ln, 2);
+            break;
+        case (8): strncat(input_type, X, 4);
             break;
         case (10): strncat(input_type, copy, 4);
             break;
@@ -626,15 +627,15 @@ void NormalButton (int btn)
             break;
         case (28): strncat(input_type, arctan, 6);
             break;
-        case (35): strncat(input_type, &power, 1);
+        case (35): strncat(input_type, power, 5);
             break;
-        case (36): strncat(input_type, &add, 1);
+        case (36): strncat(input_type, add, 3);
             break;
-        case (37): strncat(input_type, &subtract, 1);
+        case (37): strncat(input_type, subtract, 8);
             break;
-        case (38): strncat(input_type, &multiply, 1);
+        case (38): strncat(input_type, multiply, 8);
             break;
-        case (39): strncat(input_type, &divide, 1);
+        case (39): strncat(input_type, divide, 6);
             break;
     }
 }
