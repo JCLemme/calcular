@@ -82,6 +82,46 @@ int RadDeg = 1;
 double pi = 3.14159265358979323846264;
 double e = 2.71828182845904523536028747135266249775724709369995;
 
+//Functions
+void push(double b);
+double pop();
+void Swap();
+void Copy ();
+void Drop ();
+void Roll ();
+void Add ();
+void Subtract ();
+void Multiply ();
+void Divide ();
+void Power ();
+void Log ();
+void Ln ();
+void Root ();
+void Sin ();
+void Cos ();
+void Tan ();
+void Sec ();
+void Csc ();
+void Cot ();
+void Arcsin ();
+void Arccos ();
+void Arctan ();
+void Arcsec ();
+void Arccsc ();
+void Arccot ();
+void ToggleSign ();
+int GetButton ();
+void Store ();
+void FunctiontoGraph ();
+void Interpreter ();
+void NormalButton (int btn);
+void SecondButton (int btn);
+void AlphaButton (int btn);
+void UpdateKeyboard ();
+void UpdateDisplay ();
+void UpdateKernel ();
+
+
 //calculator functions-------------------------------------------
 
 void push (double b)
@@ -143,7 +183,7 @@ void Add () //works
     double b = pop();
     g = b + a;
     push(g);
-    printf("Number = %lf\n", g);
+    //printf("Number = %lf\n", g);
 }
 
 void Subtract () //works
@@ -414,15 +454,19 @@ void FunctiontoGraph ()
     double u = 1; //min for graph
     double v = 5; //max for graph
     run_yequals = 0;
-    for (int p = u; p <= v, p++)
+    for (int p = u; p <= v; p++)
     {
-        
+        Interpreter();
+        printf("x = %i\n", p);
+        double l = pop();
+        printf("y = %lf\n", stack[0]);
     }
     run_yequals = 1;
 }
 
 void Interpreter ()
 {
+    //printf("HERE\n");
     for (int t = 0; t < strlen(input_type); t++)
     {
         char tok = input_type[t];
@@ -433,10 +477,11 @@ void Interpreter ()
         }
         if (tok == ' ')
         {
-            if (isdigit(tok) || tok == '.')
+            if (atof(operation) || tok == '.')
             {
                 q = atof(operation);
                 push(q);
+                memset(operation, 0, sizeof operation);
             }
             if (strcmp(operation, logarithm) == 0)
             {
@@ -562,7 +607,7 @@ void Interpreter ()
                 Divide();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, power) == 0);
+            if (strcmp(operation, power) == 0)
             {
                 Power();
                 memset(operation, 0, sizeof operation);
@@ -574,7 +619,6 @@ void Interpreter ()
             }
         }
     }
-    memset(input_type, 0, sizeof input_type);
 }
 
 //runtime functions-------------------------------------------
@@ -610,8 +654,11 @@ void NormalButton (int btn)
         case (40): strncat(input_type, &space, 1);
             printf("%s\n", input_type);
             Interpreter();
+            memset(input_type, 0, sizeof input_type);
             break;
             //OPERATIONS-----------------------------------
+        case (1): strncat(input_type, functiontograph, 15);
+            break;
         case (2): strncat(input_type, swap, 4);
             break;
         case (4): strncat(input_type, root, 4);
