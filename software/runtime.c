@@ -32,7 +32,7 @@ int button;
 double q; //number to push from buttons
 double g; //used in operations to push new numbers
 double x; //variable on calculator
-int i; //used for reading string
+int run_yequals = 1;
 
 char zero = '0';
 char one = '1';
@@ -73,6 +73,7 @@ char arccsc[] = "arccsc";
 char arccot[] = "arccot";
 char togglesign[] = "togglesign";
 char store[] = "store";
+char functiontograph[] = "functiontograph";
 
 //Mode Settings
 int RadDeg = 1;
@@ -410,7 +411,14 @@ void Store ()
 
 void FunctiontoGraph ()
 {
-    
+    double u = 1; //min for graph
+    double v = 5; //max for graph
+    run_yequals = 0;
+    for (int p = u; p <= v, p++)
+    {
+        
+    }
+    run_yequals = 1;
 }
 
 void Interpreter ()
@@ -557,6 +565,11 @@ void Interpreter ()
             if (strcmp(operation, power) == 0);
             {
                 Power();
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, functiontograph) == 0 && run_yequals == 1)
+            {
+                FunctiontoGraph();
                 memset(operation, 0, sizeof operation);
             }
         }
