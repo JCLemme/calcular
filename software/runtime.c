@@ -464,6 +464,25 @@ void FunctiontoGraph ()
     run_yequals = 1;
 }
 
+void DecimalFraction ()
+{
+    double k = pop();
+    int num = (k)*(pow(10, 10));
+    int den = pow(10, 10);
+    for (unsigned int h = fmax(num, den); h <= fmax(num, den); h--)
+    {
+        if (remainder(num, h) == 0 && remainder(den, h) == 0)
+        {
+            double n = (num)/(x);
+            double d = (den)/(x);
+            printf("%lf/%lf\n", n, d);
+            //print number to screen as a fraction
+            push((n/d));
+            break;
+        }
+    }
+}
+
 void Interpreter ()
 {
     //printf("HERE\n");
