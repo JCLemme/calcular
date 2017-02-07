@@ -454,12 +454,14 @@ void FunctiontoGraph ()
     double u = 1; //min for graph
     double v = 5; //max for graph
     run_yequals = 0;
-    for (int p = u; p <= v; p++)
+    for (double p = u; p <= v; p++)
     {
+        x = p;
         Interpreter();
-        printf("x = %i\n", p);
+        printf("x = %lf\n", p);
         double l = pop();
-        printf("y = %lf\n", stack[0]);
+        printf("y = %lf\n", l);
+        printf("stack 0 = %lf\n, stack 1 = %lf\n, stack 2 = %lf\n", stack[0], stack[1], stack[2]);
     }
     run_yequals = 1;
 }
@@ -486,8 +488,12 @@ void DecimalFraction ()
 void Interpreter ()
 {
     //printf("HERE\n");
+    //printf("x = %lf\n", x);
+    memset(operation, 0, sizeof operation);
     for (int t = 0; t < strlen(input_type); t++)
     {
+        printf("t = %i\n", t);
+        printf("string = %s\n", operation);
         char tok = input_type[t];
         
         if (tok != ' ')
@@ -496,10 +502,16 @@ void Interpreter ()
         }
         if (tok == ' ')
         {
-            if (atof(operation) || tok == '.')
+            if (atof(operation))
             {
                 q = atof(operation);
                 push(q);
+                memset(operation, 0, sizeof operation);
+            }
+            if (strcmp(operation, X) == 0)
+            {
+                printf("X = %lf\n", x);
+                push(x);
                 memset(operation, 0, sizeof operation);
             }
             if (strcmp(operation, logarithm) == 0)
@@ -549,7 +561,8 @@ void Interpreter ()
             }
             if (strcmp(operation, tangent) == 0)
             {
-                Tan();memset(operation, 0, sizeof operation);
+                Tan();
+                memset(operation, 0, sizeof operation);
             }
             if (strcmp(operation, sec) == 0)
             {
@@ -631,9 +644,14 @@ void Interpreter ()
                 Power();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, functiontograph) == 0 && run_yequals == 1)
+            if (strcmp(operation, functiontograph) == 0)
             {
-                FunctiontoGraph();
+                if (run_yequals == 1)
+                {
+                    printf("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH\n");
+                    FunctiontoGraph();
+                }
+                printf("BBBBBBBBBBBBBBBBBBBBBBBBB\n");
                 memset(operation, 0, sizeof operation);
             }
         }
