@@ -461,7 +461,7 @@ void FunctiontoGraph ()
         printf("x = %lf\n", p);
         double l = pop();
         printf("y = %lf\n", l);
-        printf("stack 0 = %lf\n, stack 1 = %lf\n, stack 2 = %lf\n", stack[0], stack[1], stack[2]);
+        //printf("stack 0 = %lf\n, stack 1 = %lf\n, stack 2 = %lf\n", stack[0], stack[1], stack[2]);
     }
     run_yequals = 1;
 }
@@ -469,8 +469,8 @@ void FunctiontoGraph ()
 void DecimalFraction ()
 {
     double k = pop();
-    int num = (k)*(pow(10, 10));
-    int den = pow(10, 10);
+    int num = (k)*(pow(10, 8));
+    int den = pow(10, 8);
     for (unsigned int h = fmax(num, den); h <= fmax(num, den); h--)
     {
         if (remainder(num, h) == 0 && remainder(den, h) == 0)
@@ -492,8 +492,8 @@ void Interpreter ()
     memset(operation, 0, sizeof operation);
     for (int t = 0; t < strlen(input_type); t++)
     {
-        printf("t = %i\n", t);
-        printf("string = %s\n", operation);
+        //printf("t = %i\n", t);
+        //printf("string = %s\n", operation);
         char tok = input_type[t];
         
         if (tok != ' ')
@@ -648,10 +648,10 @@ void Interpreter ()
             {
                 if (run_yequals == 1)
                 {
-                    printf("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH\n");
+                    //printf("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH\n");
                     FunctiontoGraph();
                 }
-                printf("BBBBBBBBBBBBBBBBBBBBBBBBB\n");
+                //printf("BBBBBBBBBBBBBBBBBBBBBBBBB\n");
                 memset(operation, 0, sizeof operation);
             }
         }
