@@ -28,11 +28,16 @@ char text[64];
 int text_cnt = 0;
 char input_type[64];
 
+double xcoordinate[64];
+double ycoordinate[64];
+int coordinate_cnt = 0;
+
 int button;
 double q; //number to push from buttons
 double g; //used in operations to push new numbers
 double x; //variable on calculator
 int run_yequals = 1;
+double k = 15; //number of pixels from bottomof screen
 
 char zero = '0';
 char one = '1';
@@ -79,13 +84,21 @@ char functiontograph[] = "functiontograph";
 int RadDeg = 1;
 
 //Constants
-double pi = 3.14159265358979323846264;
+double pi = 3.1415926535897932384626433832795028841971693993751;
 double e = 2.71828182845904523536028747135266249775724709369995;
+//double G = pow(6.67, -11);
+//double c = pow(2.997924562, 10);
+
+//Window Settings
+int min_x = -5;
+int max_x = 5;
+int min_y = -6;
+int max_y = 6;
 
 //Functions
-void push(double b);
-double pop();
-void Swap();
+void push (double b);
+double pop ();
+void Swap ();
 void Copy ();
 void Drop ();
 void Roll ();
@@ -113,6 +126,8 @@ void ToggleSign ();
 int GetButton ();
 void Store ();
 void FunctiontoGraph ();
+void Graph ();
+void DecimalFraction ();
 void Interpreter ();
 void NormalButton (int btn);
 void SecondButton (int btn);
@@ -451,32 +466,42 @@ void Store ()
 
 void FunctiontoGraph ()
 {
-    double u = 1; //min for graph
-    double v = 5; //max for graph
     run_yequals = 0;
-    for (double p = u; p <= v; p++)
+    for (double p = min_x; p <= max_x; p++)
     {
         x = p;
         Interpreter();
         printf("x = %lf\n", p);
         double l = pop();
         printf("y = %lf\n", l);
-        printf("stack 0 = %lf\n, stack 1 = %lf\n, stack 2 = %lf\n", stack[0], stack[1], stack[2]);
+        xcoordinate[coordinate_cnt] = p;
+        ycoordinate[coordinate_cnt] = l;
+        coordinate_cnt++;
     }
+    coordinate_cnt = 0;
     run_yequals = 1;
+}
+
+void Graph ()
+{
+    int delta_y = max_y - min_y;
+    int delta_x = max_x - min_x;
+    int ticks_y = ((160 - k)/(delta_y));
+    int ticks_x = ((240)/(delta_x));
+    //graph the array
 }
 
 void DecimalFraction ()
 {
     double k = pop();
-    int num = (k)*(pow(10, 10));
-    int den = pow(10, 10);
+    int num = (k)*(pow(10, 8));
+    int den = pow(10, 8);
     for (unsigned int h = fmax(num, den); h <= fmax(num, den); h--)
     {
-        if (remainder(num, h) == 0 && remainder(den, h) == 0)
+        if (num % h == 0 && den % h == 0)
         {
-            double n = (num)/(x);
-            double d = (den)/(x);
+            double n = (num)/(h);
+            double d = (den)/(h);
             printf("%lf/%lf\n", n, d);
             //print number to screen as a fraction
             push((n/d));
@@ -492,8 +517,8 @@ void Interpreter ()
     memset(operation, 0, sizeof operation);
     for (int t = 0; t < strlen(input_type); t++)
     {
-        printf("t = %i\n", t);
-        printf("string = %s\n", operation);
+        //printf("t = %i\n", t);
+        //printf("string = %s\n", operation);
         char tok = input_type[t];
         
         if (tok != ' ')
@@ -648,10 +673,10 @@ void Interpreter ()
             {
                 if (run_yequals == 1)
                 {
-                    printf("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH\n");
+                    //printf("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH\n");
                     FunctiontoGraph();
                 }
-                printf("BBBBBBBBBBBBBBBBBBBBBBBBB\n");
+                //printf("BBBBBBBBBBBBBBBBBBBBBBBBB\n");
                 memset(operation, 0, sizeof operation);
             }
         }
@@ -756,6 +781,8 @@ void SecondButton (int btn)
         case (28): strncat(input_type, arccot, 6);
             break;
         case (32): strncat(input_type, togglesign, 10);
+            break;
+        case (42): //display home screen
             break;
     }
 }
@@ -920,6 +947,7 @@ int main (void)
 {
     while (1)
     {
+        DecimalFraction();
         UpdateKeyboard();
         //UpdateDisplay();
         //UpdateKernel();
