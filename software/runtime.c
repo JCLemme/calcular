@@ -131,6 +131,7 @@ void FunctiontoGraph ();
 void Graph ();
 void DecimalFraction ();
 void Interpreter ();
+void Initialize ();
 void NormalButton (int btn);
 void SecondButton (int btn);
 void AlphaButton (int btn);
@@ -491,6 +492,8 @@ void Graph ()
     double ticks_x = (delta_x)/(step_x);
     double tick_dist_x = (240)/(ticks_x);
     double tick_dist_y = (160-k)/(ticks_y);
+    double one_pix_x = (delta_x)/(240);
+    double one_pix_y = (delta_y)/(160-k);
 }
 
 void DecimalFraction ()
@@ -689,8 +692,8 @@ void Interpreter ()
 //runtime functions-------------------------------------------
 void Initialize ()
 {
-    pi = 3.1415926535897932384626433832795028841971693993751;
-    e = 2.71828182845904523536028747135266249775724709369995;
+    pi = 3.141592653589793;
+    e = 2.718281828459045;
     G = pow(6.67, -11);
     c = pow(2.997924562, 10);
 }
