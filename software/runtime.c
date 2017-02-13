@@ -84,16 +84,18 @@ char functiontograph[] = "functiontograph";
 int RadDeg = 1;
 
 //Constants
-double pi = 3.1415926535897932384626433832795028841971693993751;
-double e = 2.71828182845904523536028747135266249775724709369995;
-//double G = pow(6.67, -11);
-//double c = pow(2.997924562, 10);
+double pi; //pi
+double e; //e
+double G; //Universal gravitation
+double c; //speed of light
 
 //Window Settings
-int min_x = -5;
-int max_x = 5;
-int min_y = -6;
-int max_y = 6;
+double min_x = -5;
+double max_x = 5;
+double min_y = -6;
+double max_y = 6;
+double step_x = 1;
+double step_y = 1;
 
 //Functions
 void push (double b);
@@ -135,7 +137,6 @@ void AlphaButton (int btn);
 void UpdateKeyboard ();
 void UpdateDisplay ();
 void UpdateKernel ();
-
 
 //calculator functions-------------------------------------------
 
@@ -484,16 +485,18 @@ void FunctiontoGraph ()
 
 void Graph ()
 {
-    int delta_y = max_y - min_y;
-    int delta_x = max_x - min_x;
-    int ticks_y = ((160 - k)/(delta_y));
-    int ticks_x = ((240)/(delta_x));
-    //graph the array
+    double delta_y = max_y - min_y;
+    double delta_x = max_x - min_x;
+    double ticks_y = (delta_y)/(step_y);
+    double ticks_x = (delta_x)/(step_x);
+    double tick_dist_x = (240)/(ticks_x);
+    double tick_dist_y = (160-k)/(ticks_y);
 }
 
 void DecimalFraction ()
 {
     double k = pop();
+    k = .25;
     int num = (k)*(pow(10, 8));
     int den = pow(10, 8);
     for (unsigned int h = fmax(num, den); h <= fmax(num, den); h--)
@@ -684,6 +687,14 @@ void Interpreter ()
 }
 
 //runtime functions-------------------------------------------
+void Initialize ()
+{
+    pi = 3.1415926535897932384626433832795028841971693993751;
+    e = 2.71828182845904523536028747135266249775724709369995;
+    G = pow(6.67, -11);
+    c = pow(2.997924562, 10);
+}
+
 void NormalButton (int btn)
 {
     switch (btn)
@@ -948,6 +959,7 @@ int main (void)
     while (1)
     {
         DecimalFraction();
+        Initialize();
         UpdateKeyboard();
         //UpdateDisplay();
         //UpdateKernel();
