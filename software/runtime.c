@@ -37,7 +37,7 @@ double q; //number to push from buttons
 double g; //used in operations to push new numbers
 double x; //variable on calculator
 int run_yequals = 1;
-double k = 15; //number of pixels from bottomof screen
+double k = 15; //number of pixels from bottom of screen
 
 char zero = '0';
 char one = '1';
@@ -480,20 +480,31 @@ void FunctiontoGraph ()
         ycoordinate[coordinate_cnt] = l;
         coordinate_cnt++;
     }
-    coordinate_cnt = 0;
     run_yequals = 1;
 }
 
 void Graph ()
 {
-    double delta_y = max_y - min_y;
-    double delta_x = max_x - min_x;
-    double ticks_y = (delta_y)/(step_y);
-    double ticks_x = (delta_x)/(step_x);
-    double tick_dist_x = (240)/(ticks_x);
-    double tick_dist_y = (160-k)/(ticks_y);
+    int delta_y = max_y - min_y;
+    int delta_x = max_x - min_x;
+    int ticks_y = (delta_y)/(step_y) + 1;
+    int ticks_x = (delta_x)/(step_x) + 1;
+    int tick_dist_x = (240)/(ticks_x);
+    int tick_dist_y = (160-k)/(ticks_y);
     double one_pix_x = (delta_x)/(240);
     double one_pix_y = (delta_y)/(160-k);
+    int center_unit = (max_x + min_x)/2;
+    for (int u = 0; u <= coordinate_cnt; u++)
+    {
+        double h = xcoordinate[u];
+        double j = ycoordinate[u];
+        double pix_x = (h)/(one_pix_x) + 119;
+        double pix_y = (j)/(one_pix_y) + ((160-k)/2) - 1;
+        //do this for x = 0 and y = 0 and see if it fits on the screen
+        //double
+        //plot tick marks
+    }
+    coordinate_cnt = 0;
 }
 
 void DecimalFraction ()
