@@ -88,6 +88,13 @@ double pi; //pi
 double e; //e
 double G; //Universal gravitation
 double c; //speed of light
+double h; //planck's constant
+double plength; //planck's length
+double pmass; //planck's mass
+double ptime; //planck's time
+double pcharge; //planck's charge
+double ptemp; //planck's temperature
+double i; //i
 
 //Window Settings
 double min_x = -5;
@@ -705,8 +712,15 @@ void Initialize ()
 {
     pi = 3.141592653589793;
     e = 2.718281828459045;
-    G = pow(6.67, -11);
-    c = pow(2.997924562, 10);
+    G = pow(6.67, -11); // N*m*m/kg*kg
+    c = pow(2.99, 10); // m/s
+    h = pow(6.63, -34); //J*s
+    plength = pow(6.626, -35); // m*m*kg/s
+    pmass = pow(2.18, -8); //kg
+    ptime = pow(5.39, -44); //s
+    pcharge = pow(1.88, -18); //C
+    ptemp = pow(1.42, 32); //K
+    i = sqrt(-1);
 }
 
 void NormalButton (int btn)
