@@ -39,10 +39,12 @@ double x; //variable on calculator
 int run_yequals = 1;
 double k = 15; //number of pixels from bottom of screen
 
-int LeftScroll;
-int UpScroll;
-int RightScroll;
-int DownScroll;
+int LRScroll = 0;
+int UDScroll = 0;
+
+int GoHome = 0;
+
+double Pi = 3.1415926535;
 
 char zero = '0';
 char one = '1';
@@ -89,23 +91,7 @@ char functiontograph[] = "functiontograph";
 int RadDeg = 1;
 
 //Constants
-double pi; //pi
-double e; //e
-double G; //Universal gravitation
-double c; //speed of light
-double h; //planck's constant
-double plength; //planck's length
-double pmass; //planck's mass
-double ptime; //planck's time
-double pcharge; //planck's charge
-double ptemp; //planck's temperature
-double i; //i
-double electronmass; //mass of an electron
-double protonmass; //mass of a proton
-double neutronmass; //mass of a neutron
-double avogadro; //avogradro's number = 1 mol
-double gravity; //standard gravity on Earth
-double atm; //atmospheric pressure
+char const_array[][32] = {"3.141592653589793", "2.718281828459045", "6.67E-11 N*m*m/kg*kg", "2.99E10 m/s", "6.63E-34 J*s", "6.262E-35 m*m*kg/s", "2.18E-8 kg", "5.39E-44 s", "1.88E-18 C", "1.42E32 K", "sqrt(-1)", "9.109E-31 kg", "1.67E-27 kg", "1.67E-27 kg", "6.022E23 = 1 mol", "-9.8 m/s/s", "14.7 lbs/in*in = 101, 325 Pa"};
 
 //Window Settings
 double min_x = -5;
@@ -296,7 +282,7 @@ void Sin () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double y = sin((pi*f)/(180));
+        double y = sin((Pi*f)/(180));
         push(y);
     }
 }
@@ -311,7 +297,7 @@ void Cos () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double y = cos((pi*f)/(180));
+        double y = cos((Pi*f)/(180));
         push(y);
     }
 }
@@ -326,7 +312,7 @@ void Tan () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double y = tan((pi*f)/(180));
+        double y = tan((Pi*f)/(180));
         push(y);
     }
 }
@@ -341,7 +327,7 @@ void Sec () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double y = 1/cos((pi*f)/(180));
+        double y = 1/cos((Pi*f)/(180));
         push(y);
     }
 }
@@ -356,7 +342,7 @@ void Csc () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double p = 1/sin((pi*f)/(180));
+        double p = 1/sin((Pi*f)/(180));
         push(p);
     }
 }
@@ -371,7 +357,7 @@ void Cot () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double y = 1/tan((pi*f)/(180));
+        double y = 1/tan((Pi*f)/(180));
         push(y);
     }
 }
@@ -386,7 +372,7 @@ void Arcsin () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(pi);
+        double z = (y*180)/(Pi);
         push(z);
     }
 }
@@ -401,7 +387,7 @@ void Arccos () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(pi);
+        double z = (y*180)/(Pi);
         push(z);
     }
 }
@@ -416,7 +402,7 @@ void Arctan () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(pi);
+        double z = (y*180)/(Pi);
         push(z);
     }
 }
@@ -431,7 +417,7 @@ void Arcsec ()
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(pi);
+        double z = (y*180)/(Pi);
         push(z);
     }
 }
@@ -446,7 +432,7 @@ void Arccsc ()
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(pi);
+        double z = (y*180)/(Pi);
         push(z);
     }
 }
@@ -461,7 +447,7 @@ void Arccot ()
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(pi);
+        double z = (y*180)/(Pi);
         push(z);
     }
 }
@@ -549,13 +535,63 @@ void DecimalFraction ()
 
 void ConstMenu ()
 {
-   //display stuff
-Tab_Var;
+    while (!GoHome)
+    {
+        ScrollCnt();
+        if (LRScroll == 0) //Constants
+        {
+            //display list
+            int scratchc = GetButton();
+            int const_number = UDScroll;
+            //adjust display if UDScroll goes beyond window
+            if (scratchc == 40)
+            {
+                //display const_array[UDScroll][32];
+            }
+            if (scratchc == 42)
+            {
+                //display home screen
+                GoHome = 1;
+            }
+        }
+        if (LRScroll == 1)
+        {
+            //Math formulas
+            //display list of formulas
+            int scratchf = GetButton();
+            int form_number = UDScroll;
+            //adjust display
+            if (scratchf == 40)
+            {
+                //display formula whose position = UDScroll
+            }
+            if (scratchf == 42)
+            {
+                //display home screen
+                GoHome = 1;
+            }
+        }
+    }
 }
 
 void MathMenu ()
 {
-    
+    while (!GoHome)
+    {
+        ScrollCnt();
+        int funct_number = UDScroll;
+        int scratchfunct = GetButton();
+        if (scratchfunct == 40)
+        {
+            //display function whose position = UDScroll
+            //call that function and have it take arguments
+        }
+        if (scratchfunct == 42)
+        {
+            //display home screen
+            GoHome = 1;
+        }
+    }
 }
 
 void ScrollCnt ()
@@ -563,14 +599,14 @@ void ScrollCnt ()
     int scratch = GetButton();
     switch (scratch)
     {
-        case (45): LeftScroll = LeftScroll++;
+        case (45): LRScroll++;
             break;
-        case (46): UpScroll = UpScroll++;
+        case (46): UDScroll++;
             break;
-        case (47): RightScroll = RightScroll++;
+        case (47): LRScroll--;
             break;
-        case (48): DownScroll = DownScroll++;
-            break
+        case (48): UDScroll--;
+            break;
     }
 }
 
@@ -599,7 +635,7 @@ void Interpreter ()
             }
             if (strcmp(operation, X) == 0)
             {
-                printf("X = %lf\n", x);
+                //printf("X = %lf\n", x);
                 push(x);
                 memset(operation, 0, sizeof operation);
             }
@@ -750,17 +786,7 @@ void Interpreter ()
 //runtime functions-------------------------------------------
 void Initialize ()
 {
-    pi = 3.141592653589793;
-    e = 2.718281828459045;
-    G = pow(6.67, -11); // N*m*m/kg*kg
-    c = pow(2.99, 10); // m/s
-    h = pow(6.63, -34); //J*s
-    plength = pow(6.626, -35); // m*m*kg/s
-    pmass = pow(2.18, -8); //kg
-    ptime = pow(5.39, -44); //s
-    pcharge = pow(1.88, -18); //C
-    ptemp = pow(1.42, 32); //K
-    i = sqrt(-1);
+    printf("booting up\n");
 }
 
 void NormalButton (int btn)
@@ -866,7 +892,9 @@ void SecondButton (int btn)
             break;
         case (32): strncat(input_type, togglesign, 10);
             break;
-        case (42): //display home screen
+        case (42): GoHome = 1;
+            //go to home screen
+            GoHome = 0;
             break;
     }
 }
