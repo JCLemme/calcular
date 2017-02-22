@@ -39,6 +39,11 @@ double x; //variable on calculator
 int run_yequals = 1;
 double k = 15; //number of pixels from bottom of screen
 
+int LeftScroll;
+int UpScroll;
+int RightScroll;
+int DownScroll;
+
 char zero = '0';
 char one = '1';
 char two = '2';
@@ -95,6 +100,12 @@ double ptime; //planck's time
 double pcharge; //planck's charge
 double ptemp; //planck's temperature
 double i; //i
+double electronmass; //mass of an electron
+double protonmass; //mass of a proton
+double neutronmass; //mass of a neutron
+double avogadro; //avogradro's number = 1 mol
+double gravity; //standard gravity on Earth
+double atm; //atmospheric pressure
 
 //Window Settings
 double min_x = -5;
@@ -137,6 +148,9 @@ void Store ();
 void FunctiontoGraph ();
 void Graph ();
 void DecimalFraction ();
+void ConstMenu ();
+void MathMenu ();
+void ScrollCnt ();
 void Interpreter ();
 void Initialize ();
 void NormalButton (int btn);
@@ -517,7 +531,6 @@ void Graph ()
 void DecimalFraction ()
 {
     double k = pop();
-    k = .25;
     int num = (k)*(pow(10, 8));
     int den = pow(10, 8);
     for (unsigned int h = fmax(num, den); h <= fmax(num, den); h--)
@@ -531,6 +544,33 @@ void DecimalFraction ()
             push((n/d));
             break;
         }
+    }
+}
+
+void ConstMenu ()
+{
+   //display stuff
+Tab_Var;
+}
+
+void MathMenu ()
+{
+    
+}
+
+void ScrollCnt ()
+{
+    int scratch = GetButton();
+    switch (scratch)
+    {
+        case (45): LeftScroll = LeftScroll++;
+            break;
+        case (46): UpScroll = UpScroll++;
+            break;
+        case (47): RightScroll = RightScroll++;
+            break;
+        case (48): DownScroll = DownScroll++;
+            break
     }
 }
 
@@ -798,6 +838,11 @@ void NormalButton (int btn)
             break;
         case (39): strncat(input_type, divide, 6);
             break;
+            //MENUS-------------------------------------
+        case (7): MathMenu();
+            break;
+        case (34): ConstMenu();
+            break;
     }
 }
 
@@ -986,7 +1031,7 @@ int main (void)
 {
     while (1)
     {
-        DecimalFraction();
+        //DecimalFraction();
         Initialize();
         UpdateKeyboard();
         //UpdateDisplay();
