@@ -39,8 +39,8 @@ double x; //variable on calculator
 int run_yequals = 1;
 double k = 15; //number of pixels from bottom of screen
 
-int LRScroll = 0;
-int UDScroll = 0;
+unsigned int LRScroll = 0;
+unsigned int UDScroll = 0;
 
 int GoHome = 0;
 
@@ -94,10 +94,10 @@ int RadDeg = 1;
 char const_array[][32] = {"3.141592653589793", "2.718281828459045", "6.67E-11 N*m*m/kg*kg", "2.99E10 m/s", "6.63E-34 J*s", "6.262E-35 m*m*kg/s", "2.18E-8 kg", "5.39E-44 s", "1.88E-18 C", "1.42E32 K", "sqrt(-1)", "9.109E-31 kg", "1.67E-27 kg", "1.67E-27 kg", "6.022E23 = 1 mol", "-9.8 m/s/s", "14.7 lbs/in*in = 101, 325 Pa"};
 
 //Window Settings
-double min_x = -5;
-double max_x = 5;
-double min_y = -6;
-double max_y = 6;
+double min_x = -3;
+double max_x = 4;
+double min_y = -1;
+double max_y = 12;
 double step_x = 1;
 double step_y = 1;
 
@@ -136,7 +136,7 @@ void Graph ();
 void DecimalFraction ();
 void ConstMenu ();
 void MathMenu ();
-void ScrollCnt ();
+void ScrollCnt (int scratch);
 void Interpreter ();
 void Initialize ();
 void NormalButton (int btn);
@@ -488,27 +488,56 @@ void FunctiontoGraph ()
         coordinate_cnt++;
     }
     run_yequals = 1;
+    Graph();
 }
 
 void Graph ()
 {
-    int delta_y = max_y - min_y;
-    int delta_x = max_x - min_x;
-    int ticks_y = (delta_y)/(step_y) + 1;
-    int ticks_x = (delta_x)/(step_x) + 1;
-    int tick_dist_x = (240)/(ticks_x);
-    int tick_dist_y = (160-k)/(ticks_y);
+    double delta_x = max_x - min_x;
+    double delta_y = max_y - min_y;
+    
+    double ticks_x = (delta_x)/(step_x);
+    double ticks_y = (delta_y)/(step_y);
+    
+    double tick_dist_x = (240)/(ticks_x);
+    double tick_dist_y = (160-k)/(ticks_y);
+    
     double one_pix_x = (delta_x)/(240);
+    printf("one pixel = %lf units\n", one_pix_x);
     double one_pix_y = (delta_y)/(160-k);
-    int center_unit = (max_x + min_x)/2;
-    for (int u = 0; u <= coordinate_cnt; u++)
+    if (one_pix_x * 240 >= delta_x)
+    {
+        one_pix_x = one_pix_x + .001;
+    }
+    if (one_pix_y * (160-k) >= delta_y)
+    {
+        one_pix_y = one_pix_y + .001;
+    }
+    
+    double center_unit_x = (max_x + min_x)/2;
+    double center_unit_y = (max_y + min_y)/2;
+    
+    for (int u = 0; u < coordinate_cnt; u++)
     {
         double h = xcoordinate[u];
         double j = ycoordinate[u];
-        double pix_x = (h)/(one_pix_x) + 119;
-        double pix_y = (j)/(one_pix_y) + ((160-k)/2) - 1;
+        printf("(%lf, %lf)\n", h, j);
+        double pix_x = (h - center_unit_x)/(one_pix_x) + 119;
+        printf("pix_x = %lf when x = %lf\n", pix_x, h);
+        double pix_y = (j - center_unit_y)/(one_pix_y) + (((160-k)/2) - 1);
+        printf("pix_y = %lf when y = %lf\n", pix_y, j);
+        
+        if (h == 0)
+        {
+            //draw vertical line
+            printf("drawing vertical line\n");
+        }
+        if (j == 0)
+        {
+            printf("drawing horizontal line\n");
+            //draw horizontal line
+        }
         //do this for x = 0 and y = 0 and see if it fits on the screen
-        //double
         //plot tick marks
     }
     coordinate_cnt = 0;
@@ -535,52 +564,44 @@ void DecimalFraction ()
 
 void ConstMenu ()
 {
+    //printf("hello\n");
     while (!GoHome)
     {
-        ScrollCnt();
-        if (LRScroll == 0) //Constants
+        int Scratch = GetButton();
+        if (Scratch == 45 || Scratch == 46 || Scratch == 47 || Scratch == 48)
         {
-            //display list
-            int scratchc = GetButton();
-            int const_number = UDScroll;
-            //adjust display if UDScroll goes beyond window
-            if (scratchc == 40)
-            {
-                //display const_array[UDScroll][32];
-            }
-            if (scratchc == 42)
-            {
-                //display home screen
-                GoHome = 1;
-            }
+            ScrollCnt(Scratch);
         }
-        if (LRScroll == 1)
+        //print cursor at UDScroll value
+        if (Scratch == 42)
         {
-            //Math formulas
-            //display list of formulas
-            int scratchf = GetButton();
-            int form_number = UDScroll;
-            //adjust display
-            if (scratchf == 40)
-            {
-                //display formula whose position = UDScroll
-            }
-            if (scratchf == 42)
-            {
-                //display home screen
-                GoHome = 1;
-            }
+            //display
+            GoHome = 1;
+            printf("Going home\n");
+        }
+        if (LRScroll == 0 && Scratch == 40) //Constants
+        {
+            printf("UDScroll = %i\n", UDScroll);
+            printf ("%s\n", const_array[UDScroll]);
+            UDScroll = 0;
+        }
+        if (LRScroll == 1 && Scratch == 40) //math formulas
+        {
+            //display formula whose position = UDScroll
         }
     }
+    GoHome = 0;
 }
 
 void MathMenu ()
 {
     while (!GoHome)
     {
-        ScrollCnt();
-        int funct_number = UDScroll;
         int scratchfunct = GetButton();
+        if (scratchfunct == 45 || scratchfunct == 46 || scratchfunct == 47 || scratchfunct == 48)
+        {
+            ScrollCnt(scratchfunct);
+        }
         if (scratchfunct == 40)
         {
             //display function whose position = UDScroll
@@ -594,18 +615,18 @@ void MathMenu ()
     }
 }
 
-void ScrollCnt ()
+void ScrollCnt (int scratch)
 {
-    int scratch = GetButton();
+    //printf("foo\n");
     switch (scratch)
     {
-        case (45): LRScroll++;
+        case (45): LRScroll--;
             break;
-        case (46): UDScroll++;
+        case (46): UDScroll--;
             break;
-        case (47): LRScroll--;
+        case (47): LRScroll++;
             break;
-        case (48): UDScroll--;
+        case (48): UDScroll++;
             break;
     }
 }
@@ -1057,10 +1078,10 @@ void UpdateKernel ()
 
 int main (void)
 {
+    Initialize();
     while (1)
     {
         //DecimalFraction();
-        Initialize();
         UpdateKeyboard();
         //UpdateDisplay();
         //UpdateKernel();
