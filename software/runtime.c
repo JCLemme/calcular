@@ -93,6 +93,8 @@ int RadDeg = 1;
 //Constants
 char const_array[][32] = {"3.141592653589793", "2.718281828459045", "6.67E-11 N*m*m/kg*kg", "2.99E10 m/s", "6.63E-34 J*s", "6.262E-35 m*m*kg/s", "2.18E-8 kg", "5.39E-44 s", "1.88E-18 C", "1.42E32 K", "sqrt(-1)", "9.109E-31 kg", "1.67E-27 kg", "1.67E-27 kg", "6.022E23 = 1 mol", "-9.8 m/s/s", "14.7 lbs/in*in = 101, 325 Pa"};
 
+char 
+
 //Window Settings
 double min_x = -3;
 double max_x = 4;
@@ -875,6 +877,8 @@ void NormalButton (int btn)
             break;
         case (28): strncat(input_type, arctan, 6);
             break;
+        case (34): memset(input_type, 0, sizeof input_type);
+            break;
         case (35): strncat(input_type, power, 5);
             break;
         case (36): strncat(input_type, add, 3);
@@ -888,8 +892,6 @@ void NormalButton (int btn)
             //MENUS-------------------------------------
         case (7): MathMenu();
             break;
-        case (34): ConstMenu();
-            break;
     }
 }
 
@@ -897,6 +899,8 @@ void SecondButton (int btn)
 {
     switch (btn)
     {
+        case (7): ConstMenu();
+            break;
         case (8): strncat(input_type, store, 5);
             break;
         case (11): strncat(input_type, csc, 3);
@@ -914,7 +918,7 @@ void SecondButton (int btn)
         case (32): strncat(input_type, togglesign, 10);
             break;
         case (42): GoHome = 1;
-            //go to home screen
+            //display home screen
             GoHome = 0;
             break;
     }
