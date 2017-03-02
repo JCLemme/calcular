@@ -32,6 +32,9 @@ double xcoordinate[64];
 double ycoordinate[64];
 int coordinate_cnt = 0;
 
+// ∫ (integral sign for printing text)
+// ≠ (does not equal sign for printing)
+
 int button;
 double q; //number to push from buttons
 double g; //used in operations to push new numbers
@@ -44,7 +47,7 @@ unsigned int UDScroll = 0;
 
 int GoHome = 0;
 
-double Pi = 3.1415926535;
+double π = 3.1415926535;
 
 char zero = '0';
 char one = '1';
@@ -93,15 +96,19 @@ int RadDeg = 1;
 //Constants
 char const_array[][32] = {"3.141592653589793", "2.718281828459045", "6.67E-11 N*m*m/kg*kg", "2.99E10 m/s", "6.63E-34 J*s", "6.262E-35 m*m*kg/s", "2.18E-8 kg", "5.39E-44 s", "1.88E-18 C", "1.42E32 K", "sqrt(-1)", "9.109E-31 kg", "1.67E-27 kg", "1.67E-27 kg", "6.022E23 = 1 mol", "-9.8 m/s/s", "14.7 lbs/in*in = 101, 325 Pa"};
 
-char 
+char formula_array[][256] = {"V = (4/3)πr(^3)", "V = π(r^2)h", "V = (1/3)π(r^2)h", "V = (1/3)Bh", "x = Vix*t\nΔy = .5a(t^2) + Viy*t\n(Vfy^2) = (Viy^2) + 2gt\ng = (Vfy - Viy)/2", "μ = Ff/Fn", "Fc = m(v^2)/r\na = (v^2)/r", "Fg = (G*m1*m2)/(r^2)", "a/sin(A) = b/sin(B) = c/sin(C)", "(a^2) = (b^2) + (c^2) - 2bc*cos(A)", "E = I * R", "P1 * V1 = P2 * V2", "F = P*A)", "V1 * T2 = V2 * T1", "(sinx)^2 + (cosx)^2 = 1\nsin(a+-b) = sinacosb +- cosasinb\ncos(a+-b) = cosacosb -+ sinasinb\nsin(2x) = 2sinxcosx\ncos(2x) = (cosx)^2 - (sinx)^2\n(sinx)^2 = (1 - cos(2x))/2\n(cosx)^2 = (1 + cos(2x))/2", "d/dx x^n = n * x^(n-1) * dx\nd/dx a^x = a^x * lna * dx\nd/dx lnx = 1/x * dx", "d/dx sinx = cos dx\nd/dx cosx = -sinx dx\nd/dx tanx = (secx)^2 dx\nd/dx cscx = -cscx * cotx dx\nd/dx secx = secx * tanx dx\nd/dx cotx = -(cscx)^2 dx", "∫x^n dx = x^(n+1)/(n+1) + C; n ≠ 1\n∫1/x dx = ln|x| + C\n∫lnx dx = xln|x| - x + C\n∫e^(ax) dx = e^(ax)/a + C", "∫sinx dx = -cosx + C\n∫cosx dx = sinx + C\n∫tanx dx = -ln|cosx| + C\n∫secx dx = ln|secx + tanx| + C\n∫cscx dx = ln|cscx + cotx| + C\n∫cotx dx = ln|sinx| + C"};
+
+char math_function_array[][32] = {};
 
 //Window Settings
 double min_x = -3;
 double max_x = 4;
 double min_y = -1;
 double max_y = 12;
-double step_x = 1;
-double step_y = 1;
+double step_x = .1;
+double step_y = .1;
+double tick_step_x = 1;
+double tick_step_y = 1;
 
 //Functions
 void push (double b);
@@ -284,7 +291,7 @@ void Sin () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double y = sin((Pi*f)/(180));
+        double y = sin((π*f)/(180));
         push(y);
     }
 }
@@ -299,7 +306,7 @@ void Cos () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double y = cos((Pi*f)/(180));
+        double y = cos((π*f)/(180));
         push(y);
     }
 }
@@ -314,7 +321,7 @@ void Tan () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double y = tan((Pi*f)/(180));
+        double y = tan((π*f)/(180));
         push(y);
     }
 }
@@ -329,7 +336,7 @@ void Sec () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double y = 1/cos((Pi*f)/(180));
+        double y = 1/cos((π*f)/(180));
         push(y);
     }
 }
@@ -344,7 +351,7 @@ void Csc () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double p = 1/sin((Pi*f)/(180));
+        double p = 1/sin((π*f)/(180));
         push(p);
     }
 }
@@ -359,7 +366,7 @@ void Cot () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double y = 1/tan((Pi*f)/(180));
+        double y = 1/tan((π*f)/(180));
         push(y);
     }
 }
@@ -374,7 +381,7 @@ void Arcsin () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(Pi);
+        double z = (y*180)/(π);
         push(z);
     }
 }
@@ -389,7 +396,7 @@ void Arccos () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(Pi);
+        double z = (y*180)/(π);
         push(z);
     }
 }
@@ -404,7 +411,7 @@ void Arctan () //works (DEG)
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(Pi);
+        double z = (y*180)/(π);
         push(z);
     }
 }
@@ -419,7 +426,7 @@ void Arcsec ()
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(Pi);
+        double z = (y*180)/(π);
         push(z);
     }
 }
@@ -434,7 +441,7 @@ void Arccsc ()
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(Pi);
+        double z = (y*180)/(π);
         push(z);
     }
 }
@@ -449,7 +456,7 @@ void Arccot ()
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(Pi);
+        double z = (y*180)/(π);
         push(z);
     }
 }
@@ -478,7 +485,7 @@ void Store ()
 void FunctiontoGraph ()
 {
     run_yequals = 0;
-    for (double p = min_x; p <= max_x; p++)
+    for (double p = min_x; p <= max_x; p = p + step_x)
     {
         x = p;
         Interpreter();
@@ -498,8 +505,8 @@ void Graph ()
     double delta_x = max_x - min_x;
     double delta_y = max_y - min_y;
     
-    double ticks_x = (delta_x)/(step_x);
-    double ticks_y = (delta_y)/(step_y);
+    double ticks_x = (delta_x)/(tick_step_x);
+    double ticks_y = (delta_y)/(tick_step_y);
     
     double tick_dist_x = (240)/(ticks_x);
     double tick_dist_y = (160-k)/(ticks_y);
@@ -525,10 +532,8 @@ void Graph ()
         double j = ycoordinate[u];
         printf("(%lf, %lf)\n", h, j);
         double pix_x = (h - center_unit_x)/(one_pix_x) + 119;
-        printf("pix_x = %lf when x = %lf\n", pix_x, h);
         double pix_y = (j - center_unit_y)/(one_pix_y) + (((160-k)/2) - 1);
-        printf("pix_y = %lf when y = %lf\n", pix_y, j);
-        
+        printf("(%lf, %lf)\n", pix_x, pix_y);
         if (h == 0)
         {
             //draw vertical line
@@ -539,10 +544,10 @@ void Graph ()
             printf("drawing horizontal line\n");
             //draw horizontal line
         }
-        //do this for x = 0 and y = 0 and see if it fits on the screen
         //plot tick marks
     }
     coordinate_cnt = 0;
+    //draw lines in between all of the pixels
 }
 
 void DecimalFraction ()
@@ -562,6 +567,81 @@ void DecimalFraction ()
             break;
         }
     }
+}
+
+void LHL ()
+{
+  
+    
+}
+void RHL ()
+{
+    
+}
+
+void Limit ()
+{
+    
+}
+
+void DyDx ()
+{
+    
+}
+
+void Integral ()
+{
+    
+}
+
+void Distance ()
+{
+    double X2, X1, Y2, Y1, D1, D2, D3;
+    Y2 = pop();
+    X2 = pop();
+    Y1 = pop();
+    X1 = pop();
+    D1 = (X2 - X1)*(X2 - X1);
+    D2 = (Y2 - Y1)*(Y2 - Y1);
+    D3 = sqrt((D1+D2));
+    printf("D = %lf\n", D3);
+}
+
+void Midpoint ()
+{
+    double X2, X1, Y2, Y1, X3, Y3;
+    Y2 = pop();
+    X2 = pop();
+    Y1 = pop();
+    X1 = pop();
+    X3 = (X1 + X2)/2;
+    Y3 = (Y1 + Y2)/2;
+    printf("The midpoint is {%lf, %lf}\n", X3, Y3);
+}
+
+void Quadratic ()
+{
+    double A, B, C, X1, Y1;
+    C = pop();
+    B = pop();
+    A = pop();
+    X1 = ((-B) + sqrt((B*B) - (4*A*C))/(2*A));
+    Y1 = ((-B) - sqrt((B*B) - (4*A*C))/(2*A));
+    printf("x = %lf\nx = %lf\n", X1, Y1);
+}
+
+void RadiansDegrees ()
+{
+    double rad = pop();
+    double deg = (180*rad)/(π);
+    printf("%lf degrees\n", deg);
+}
+
+void DegreesRadians ()
+{
+    double deg = pop();
+    double rad = (π*deg)/(180);
+    printf("%lf radians\n", rad);
 }
 
 void ConstMenu ()
@@ -589,7 +669,9 @@ void ConstMenu ()
         }
         if (LRScroll == 1 && Scratch == 40) //math formulas
         {
-            //display formula whose position = UDScroll
+            printf("UDScroll = %i\n", UDScroll);
+            printf ("%s\n", formula_array[UDScroll]);
+            UDScroll = 0;
         }
     }
     GoHome = 0;
@@ -607,12 +689,14 @@ void MathMenu ()
         if (scratchfunct == 40)
         {
             //display function whose position = UDScroll
+            //example: DecFrac
             //call that function and have it take arguments
         }
         if (scratchfunct == 42)
         {
             //display home screen
             GoHome = 1;
+            printf("Going home\n");
         }
     }
 }
@@ -1064,14 +1148,6 @@ void UpdateKeyboard ()
     }
 }
 
-void UpdateDisplay ()
-{
-    /*
-     tell display what to print and where to print it
-     */
-    int g;
-}
-
 void UpdateKernel ()
 {
     /*
@@ -1087,7 +1163,6 @@ int main (void)
     {
         //DecimalFraction();
         UpdateKeyboard();
-        //UpdateDisplay();
         //UpdateKernel();
     }
 }
