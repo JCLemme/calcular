@@ -6,6 +6,9 @@
 //
 //
 
+//limit -update keyboaerd until an enter key and add comma interpretation
+//same for derivative and integral and add comma interpretation
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -46,6 +49,10 @@ unsigned int LRScroll = 0;
 unsigned int UDScroll = 0;
 
 int GoHome = 0;
+
+void (*fncPtr)();
+
+char fnc[64];
 
 double π = 3.1415926535;
 
@@ -98,7 +105,14 @@ char const_array[][32] = {"3.141592653589793", "2.718281828459045", "6.67E-11 N*
 
 char formula_array[][256] = {"V = (4/3)πr(^3)", "V = π(r^2)h", "V = (1/3)π(r^2)h", "V = (1/3)Bh", "x = Vix*t\nΔy = .5a(t^2) + Viy*t\n(Vfy^2) = (Viy^2) + 2gt\ng = (Vfy - Viy)/2", "μ = Ff/Fn", "Fc = m(v^2)/r\na = (v^2)/r", "Fg = (G*m1*m2)/(r^2)", "a/sin(A) = b/sin(B) = c/sin(C)", "(a^2) = (b^2) + (c^2) - 2bc*cos(A)", "E = I * R", "P1 * V1 = P2 * V2", "F = P*A)", "V1 * T2 = V2 * T1", "(sinx)^2 + (cosx)^2 = 1\nsin(a+-b) = sinacosb +- cosasinb\ncos(a+-b) = cosacosb -+ sinasinb\nsin(2x) = 2sinxcosx\ncos(2x) = (cosx)^2 - (sinx)^2\n(sinx)^2 = (1 - cos(2x))/2\n(cosx)^2 = (1 + cos(2x))/2", "d/dx x^n = n * x^(n-1) * dx\nd/dx a^x = a^x * lna * dx\nd/dx lnx = 1/x * dx", "d/dx sinx = cos dx\nd/dx cosx = -sinx dx\nd/dx tanx = (secx)^2 dx\nd/dx cscx = -cscx * cotx dx\nd/dx secx = secx * tanx dx\nd/dx cotx = -(cscx)^2 dx", "∫x^n dx = x^(n+1)/(n+1) + C; n ≠ 1\n∫1/x dx = ln|x| + C\n∫lnx dx = xln|x| - x + C\n∫e^(ax) dx = e^(ax)/a + C", "∫sinx dx = -cosx + C\n∫cosx dx = sinx + C\n∫tanx dx = -ln|cosx| + C\n∫secx dx = ln|secx + tanx| + C\n∫cscx dx = ln|cscx + cotx| + C\n∫cotx dx = ln|sinx| + C"};
 
-char math_function_array[][32] = {};
+char math_function_array[][32] = {"DecimalFraction", "Distance", "Midpoint", "Quadratic", "RadiansDegrees", "DegreesRadians"};
+
+char DecFrac[] = "DecimalFraction";
+char Dist[] = "Distance";
+char Mdpt[] = "Midpoint";
+char Quad[] = "Quadratic";
+char RD[] = "RadiansDegrees";
+char DR[] = "DegreesRadians";
 
 //Window Settings
 double min_x = -3;
@@ -142,7 +156,13 @@ int GetButton ();
 void Store ();
 void FunctiontoGraph ();
 void Graph ();
+void Table ();
 void DecimalFraction ();
+void Distance ();
+void Midpoint ();
+void Quadratic ();
+void RadiansDegrees ();
+void DegreesRadians ();
 void ConstMenu ();
 void MathMenu ();
 void ScrollCnt (int scratch);
@@ -152,7 +172,6 @@ void NormalButton (int btn);
 void SecondButton (int btn);
 void AlphaButton (int btn);
 void UpdateKeyboard ();
-void UpdateDisplay ();
 void UpdateKernel ();
 
 //calculator functions-------------------------------------------
@@ -550,6 +569,11 @@ void Graph ()
     //draw lines in between all of the pixels
 }
 
+void Table ()
+{
+    //print table
+}
+
 void DecimalFraction ()
 {
     double k = pop();
@@ -567,31 +591,6 @@ void DecimalFraction ()
             break;
         }
     }
-}
-
-void LHL ()
-{
-  
-    
-}
-void RHL ()
-{
-    
-}
-
-void Limit ()
-{
-    
-}
-
-void DyDx ()
-{
-    
-}
-
-void Integral ()
-{
-    
 }
 
 void Distance ()
@@ -688,9 +687,35 @@ void MathMenu ()
         }
         if (scratchfunct == 40)
         {
-            //display function whose position = UDScroll
-            //example: DecFrac
-            //call that function and have it take arguments
+            printf("UDScroll = %i\n", UDScroll);
+            printf ("%s\n", math_function_array[UDScroll]);
+            strcpy(fnc, math_function_array[UDScroll]);
+            if (!strcmp(fnc, DecFrac))
+            {
+                fncPtr = &DecimalFraction;
+            }
+            if (!strcmp(fnc, Dist))
+            {
+                fncPtr = &Distance;
+            }
+            if (!strcmp(fnc, Mdpt))
+            {
+                fncPtr = &Midpoint;
+            }
+            if (!strcmp(fnc, Quad))
+            {
+                fncPtr = &Quadratic;
+            }
+            if (!strcmp(fnc, RD))
+            {
+                fncPtr = &RadiansDegrees;
+            }
+            if (!strcmp(fnc, DR))
+            {
+                fncPtr = &DegreesRadians;
+            }
+            UDScroll = 0;
+            (*fncPtr)();
         }
         if (scratchfunct == 42)
         {
@@ -740,143 +765,143 @@ void Interpreter ()
                 push(q);
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, X) == 0)
+            if (!strcmp(operation, X))
             {
                 //printf("X = %lf\n", x);
                 push(x);
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, logarithm) == 0)
+            if (!strcmp(operation, logarithm))
             {
                 Log();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, ln) == 0)
+            if (!strcmp(operation, ln))
             {
                 Ln();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, root) == 0)
+            if (!strcmp(operation, root))
             {
                 Root();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, swap) == 0)
+            if (!strcmp(operation, swap))
             {
                 Swap();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, drop) == 0)
+            if (!strcmp(operation, drop))
             {
                 Drop();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, roll) == 0)
+            if (!strcmp(operation, roll))
             {
                 Roll();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, copy) == 0)
+            if (!strcmp(operation, copy))
             {
                 Copy();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, sine) == 0)
+            if (!strcmp(operation, sine))
             {
                 Sin();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, cosine) == 0)
+            if (!strcmp(operation, cosine))
             {
                 Cos();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, tangent) == 0)
+            if (!strcmp(operation, tangent))
             {
                 Tan();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, sec) == 0)
+            if (!strcmp(operation, sec))
             {
                 Sec();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, csc) == 0)
+            if (!strcmp(operation, csc))
             {
                 Csc();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, cot) == 0)
+            if (!strcmp(operation, cot))
             {
                 Cot();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, arcsin) == 0)
+            if (!strcmp(operation, arcsin))
             {
                 Arcsin();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, arccos) == 0)
+            if (!strcmp(operation, arccos))
             {
                 Arccos();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, arctan) == 0)
+            if (!strcmp(operation, arctan))
             {
                 Arctan();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, arcsec) == 0)
+            if (!strcmp(operation, arcsec))
             {
                 Arcsec();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, arccsc) == 0)
+            if (!strcmp(operation, arccsc))
             {
                 Arccsc();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, arccot) == 0)
+            if (!strcmp(operation, arccot))
             {
                 Arccot();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, togglesign) == 0)
+            if (!strcmp(operation, togglesign))
             {
                 ToggleSign();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, store) == 0)
+            if (!strcmp(operation, store))
             {
                 Store();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, add) == 0)
+            if (!strcmp(operation, add))
             {
                 Add();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, subtract) == 0)
+            if (!strcmp(operation, subtract))
             {
                 Subtract();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, multiply) == 0)
+            if (!strcmp(operation, multiply))
             {
                 Multiply();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, divide) == 0)
+            if (!strcmp(operation, divide))
             {
                 Divide();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, power) == 0)
+            if (!strcmp(operation, power))
             {
                 Power();
                 memset(operation, 0, sizeof operation);
             }
-            if (strcmp(operation, functiontograph) == 0)
+            if (!strcmp(operation, functiontograph))
             {
                 if (run_yequals == 1)
                 {
