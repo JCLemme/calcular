@@ -6,9 +6,6 @@
 //
 //
 
-//limit -update keyboaerd until an enter key and add comma interpretation
-//same for derivative and integral and add comma interpretation
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -28,7 +25,6 @@ char number[64];
 char operation[64];
 
 char text[64];
-int text_cnt = 0;
 char input_type[64];
 
 double xcoordinate[64];
@@ -43,6 +39,7 @@ double q; //number to push from buttons
 double g; //used in operations to push new numbers
 double x; //variable on calculator
 int run_yequals = 1;
+int run_limit = 1;
 double k = 15; //number of pixels from bottom of screen
 
 unsigned int LRScroll = 0;
@@ -72,7 +69,7 @@ char subtract[] = "subtract";
 char multiply[] = "multiply";
 char divide[] = "divide";
 char power[] = "power";
-char X[] = "varx";
+char Xx[] = "varx";
 char space = ' ';
 char logarithm[] = "log";
 char ln[] = "ln";
@@ -97,6 +94,37 @@ char togglesign[] = "togglesign";
 char store[] = "store";
 char functiontograph[] = "functiontograph";
 
+char A = 'A';
+char B = 'B';
+char C = 'C';
+char D = 'D';
+char E = 'E';
+char F = 'F';
+char G = 'G';
+char H = 'H';
+char I = 'I';
+char J = 'J';
+char K = 'K';
+char L = 'L';
+char M = 'M';
+char N = 'N';
+char O = 'O';
+char P = 'P';
+char Q = 'Q';
+char R = 'R';
+char S = 'S';
+char T = 'T';
+char U = 'U';
+char V = 'V';
+char W = 'W';
+char X = 'X';
+char Y = 'Y';
+char Z = 'Z';
+char apostraphe = '\'';
+char period = '.';
+char quote = '"';
+char comma = ',';
+
 //Mode Settings
 int RadDeg = 1;
 
@@ -105,7 +133,7 @@ char const_array[][32] = {"3.141592653589793", "2.718281828459045", "6.67E-11 N*
 
 char formula_array[][256] = {"V = (4/3)πr(^3)", "V = π(r^2)h", "V = (1/3)π(r^2)h", "V = (1/3)Bh", "x = Vix*t\nΔy = .5a(t^2) + Viy*t\n(Vfy^2) = (Viy^2) + 2gt\ng = (Vfy - Viy)/2", "μ = Ff/Fn", "Fc = m(v^2)/r\na = (v^2)/r", "Fg = (G*m1*m2)/(r^2)", "a/sin(A) = b/sin(B) = c/sin(C)", "(a^2) = (b^2) + (c^2) - 2bc*cos(A)", "E = I * R", "P1 * V1 = P2 * V2", "F = P*A)", "V1 * T2 = V2 * T1", "(sinx)^2 + (cosx)^2 = 1\nsin(a+-b) = sinacosb +- cosasinb\ncos(a+-b) = cosacosb -+ sinasinb\nsin(2x) = 2sinxcosx\ncos(2x) = (cosx)^2 - (sinx)^2\n(sinx)^2 = (1 - cos(2x))/2\n(cosx)^2 = (1 + cos(2x))/2", "d/dx x^n = n * x^(n-1) * dx\nd/dx a^x = a^x * lna * dx\nd/dx lnx = 1/x * dx", "d/dx sinx = cos dx\nd/dx cosx = -sinx dx\nd/dx tanx = (secx)^2 dx\nd/dx cscx = -cscx * cotx dx\nd/dx secx = secx * tanx dx\nd/dx cotx = -(cscx)^2 dx", "∫x^n dx = x^(n+1)/(n+1) + C; n ≠ 1\n∫1/x dx = ln|x| + C\n∫lnx dx = xln|x| - x + C\n∫e^(ax) dx = e^(ax)/a + C", "∫sinx dx = -cosx + C\n∫cosx dx = sinx + C\n∫tanx dx = -ln|cosx| + C\n∫secx dx = ln|secx + tanx| + C\n∫cscx dx = ln|cscx + cotx| + C\n∫cotx dx = ln|sinx| + C"};
 
-char math_function_array[][32] = {"DecimalFraction", "Distance", "Midpoint", "Quadratic", "RadiansDegrees", "DegreesRadians"};
+char math_function_array[][32] = {"DecimalFraction", "Distance", "Midpoint", "Quadratic", "RadiansDegrees", "DegreesRadians", "lmt"};
 
 char DecFrac[] = "DecimalFraction";
 char Dist[] = "Distance";
@@ -113,6 +141,7 @@ char Mdpt[] = "Midpoint";
 char Quad[] = "Quadratic";
 char RD[] = "RadiansDegrees";
 char DR[] = "DegreesRadians";
+char lmt[] = "lmt";
 
 //Window Settings
 double min_x = -3;
@@ -499,6 +528,7 @@ void Store ()
 {
     double a = pop();
     x = a;
+    printf("x == %lf", x);
 }
 
 void FunctiontoGraph ()
@@ -565,7 +595,6 @@ void Graph ()
         }
         //plot tick marks
     }
-    coordinate_cnt = 0;
     //draw lines in between all of the pixels
 }
 
@@ -643,6 +672,65 @@ void DegreesRadians ()
     printf("%lf radians\n", rad);
 }
 
+double LeftLimit ()
+{
+    double LHL;
+    double a = .1 * pow(10, -5);
+    x = x - a;
+    //printf("new x = %lf\n", x);
+    Interpreter();
+    x = x + a;
+    double Fx = pop();
+    printf("F(x) approaches %lf from the left\n", Fx);
+    LHL = Fx;
+    return LHL;
+}
+
+double RightLimit ()
+{
+    double RHL;
+    double a = .1 * pow(10, -5);
+    x = x + a;
+    Interpreter();
+    x = x - a;
+    double Gx = pop();
+    printf("G(x) approaches %lf from the right\n", Gx);
+    RHL = Gx;
+    return RHL;
+}
+
+double Lmt (double L, double R)
+{
+    double Lim;
+    if (fabs(R - L) < 0.1)
+    {
+        Lim = (L + R)/2;
+        printf("Limit as x-> %lf = %lf\n", x, Lim);
+    }
+    
+    else
+    {
+        printf("The limit does not exist\n");
+    }
+    return 0;
+}
+
+void Limit ()
+{
+    run_limit = 0;
+    double L = LeftLimit();
+    double R = RightLimit();
+    Lmt(L, R);
+    run_limit = 1;
+}
+
+void limit ()
+{
+    strncat(input_type, lmt, 3);
+    strncat(input_type, &space, 1);
+    GoHome = 1;
+}
+
 void ConstMenu ()
 {
     //printf("hello\n");
@@ -714,6 +802,10 @@ void MathMenu ()
             {
                 fncPtr = &DegreesRadians;
             }
+            if (!strcmp(fnc, lmt))
+            {
+                fncPtr = &limit;
+            }
             UDScroll = 0;
             (*fncPtr)();
         }
@@ -765,7 +857,7 @@ void Interpreter ()
                 push(q);
                 memset(operation, 0, sizeof operation);
             }
-            if (!strcmp(operation, X))
+            if (!strcmp(operation, Xx))
             {
                 //printf("X = %lf\n", x);
                 push(x);
@@ -905,10 +997,17 @@ void Interpreter ()
             {
                 if (run_yequals == 1)
                 {
-                    //printf("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH\n");
                     FunctiontoGraph();
                 }
-                //printf("BBBBBBBBBBBBBBBBBBBBBBBBB\n");
+                memset(operation, 0, sizeof operation);
+            }
+            if (!strcmp(operation, lmt))
+            {
+                printf("here\n");
+                if (run_limit == 1)
+                {
+                    Limit();
+                }
                 memset(operation, 0, sizeof operation);
             }
         }
@@ -966,7 +1065,7 @@ void NormalButton (int btn)
             break;
         case (6): strncat(input_type, ln, 2);
             break;
-        case (8): strncat(input_type, X, 4);
+        case (8): strncat(input_type, Xx, 4);
             break;
         case (10): strncat(input_type, copy, 4);
             break;
@@ -1037,101 +1136,67 @@ void AlphaButton (int btn)
 {
     switch (btn)
     {
-        case (2): text[text_cnt] = 'A';
-            text_cnt++;
+        case (2): strncat(text, &A, 1);
             break;
-        case (3): text[text_cnt] = 'F';
-            text_cnt++;
+        case (3): strncat(text, &F, 1);
             break;
-        case (4): text[text_cnt] = 'K';
-            text_cnt++;
+        case (4): strncat(text, &K, 1);
             break;
-        case (5): text[text_cnt] = 'P';
-            text_cnt++;
+        case (5): strncat(text, &P, 1);
             break;
-        case (6): text[text_cnt] = 'U';
-            text_cnt++;
+        case (6): strncat(text, &U, 1);
             break;
-        case (7): text[text_cnt] = 'Z';
-            text_cnt++;
+        case (7): strncat(text, &Z, 1);
             break;
-        case (10): text[text_cnt] = 'B';
-            text_cnt++;
+        case (10): strncat(text, &B, 1);
             break;
-        case (11): text[text_cnt] = 'G';
-            text_cnt++;
+        case (11): strncat(text, &G, 1);
             break;
-        case (12): text[text_cnt] = 'L';
-            text_cnt++;
+        case (12): strncat(text, &L, 1);
             break;
-        case (13): text[text_cnt] = 'Q';
-            text_cnt++;
+        case (13): strncat(text, &Q, 1);
             break;
-        case (14): text[text_cnt] = 'V';
-            text_cnt++;
+        case (14): strncat(text, &V, 1);
             break;
-        case (15): text[text_cnt] = '\'';
-            text_cnt++;
+        case (15): strncat(text, &apostraphe, 1);
             break;
-        case (18): text[text_cnt] = 'C';
-            text_cnt++;
+        case (18): strncat(text, &C, 1);
             break;
-        case (19): text[text_cnt] = 'H';
-            text_cnt++;
+        case (19): strncat(text, &H, 1);
             break;
-        case (20): text[text_cnt] = 'M';
-            text_cnt++;
+        case (20): strncat(text, &M, 1);
             break;
-        case (21): text[text_cnt] = 'R';
-            text_cnt++;
+        case (21): strncat(text, &R, 1);
             break;
-        case (22): text[text_cnt] = 'W';
-            text_cnt++;
+        case (22): strncat(text, &W, 1);
             break;
-        case (23): text[text_cnt] = '"';
-            text_cnt++;
+        case (23): strncat(text, &quote, 1);
             break;
-        case (24): text[text_cnt] = '.';
-            text_cnt++;
+        case (24): strncat(text, &period, 1);
             break;
-        case (26): text[text_cnt] = 'D';
-            text_cnt++;
+        case (26): strncat(text, &D, 1);
             break;
-        case (27): text[text_cnt] = 'I';
-            //printf("%s\n", text);
-            text_cnt++;
+        case (27): strncat(text, &I, 1);
             break;
-        case (28): text[text_cnt] = 'N';
-            text_cnt++;
+        case (28): strncat(text, &N, 1);
             break;
-        case (29): text[text_cnt] = 'S';
-            text_cnt++;
+        case (29): strncat(text, &S, 1);
             break;
-        case (30): text[text_cnt] = 'X';
-            text_cnt++;
-            //printf("%s\n", text);
+        case (30): strncat(text, &X, 1);
             break;
-        case (31): text[text_cnt] = ',';
-            text_cnt++;
+        case (31): strncat(text, &comma, 1);
             break;
-        case (32): text[text_cnt] = ' ';
-            //printf("%s\n", text);
-            text_cnt++;
+        case (32): strncat(text, &space, 1);
             break;
-        case (34): text[text_cnt] = 'E';
-            text_cnt++;
+        case (34): strncat(text, &E, 1);
             break;
-        case (35): text[text_cnt] = 'J';
-            text_cnt++;
+        case (35): strncat(text, &J, 1);
             break;
-        case (36): text[text_cnt] = 'O';
-            text_cnt++;
+        case (36): strncat(text, &O, 1);
             break;
-        case (37): text[text_cnt] = 'T';
-            text_cnt++;
+        case (37): strncat(text, &T, 1);
             break;
-        case (38): text[text_cnt] = 'Y';
-            text_cnt++;
+        case (38): strncat(text, &Y, 1);
             break;
     }
 }
