@@ -192,10 +192,18 @@ void Graph ();
 void Table ();
 void DecimalFraction ();
 void Distance ();
-void Midpoint ();
+void Midpoint ()
 void Quadratic ();
 void RadiansDegrees ();
 void DegreesRadians ();
+double LeftLimit ();
+double RightLimit ();
+double Lmt (double L, double R);
+void Limit ();
+void limit ();
+void TheDsCancel ();
+void Derivative ();
+void DyDx ();
 void ConstMenu ();
 void MathMenu ();
 void ScrollCnt (int scratch);
@@ -228,23 +236,15 @@ void Swap ()
 {
     double f = stack[0];
     double k = stack[1];
-    //printf("Stack 0 = %lf\n", stack[0]);
-    //printf("Stack 1 = %lf\n", stack[1]);
     stack[0] = k;
     stack[1] = f;
-    //printf("Stack 0 = %lf\n", stack[0]);
-    //printf("Stack 1 = %lf\n", stack[1]);
 }
 
 void Copy ()
 {
-    //printf("Stack 0 = %lf\n", stack[0]);
-    //printf("Stack 1 = %lf\n", stack[1]);
     double t = pop();
     push(t);
     push(t);
-    //printf("Stack 0 = %lf\n", stack[0]);
-    //printf("Stack 1 = %lf\n", stack[1]);
 }
 
 void Drop ()
@@ -262,52 +262,47 @@ void Roll ()
     push(z);
 }
 
-void Add () //works
+void Add ()
 {
     double a = pop();
     double b = pop();
     g = b + a;
     push(g);
-    //printf("Number = %lf\n", g);
 }
 
-void Subtract () //works
+void Subtract ()
 {
     double a = pop();
     double b = pop();
     g = b - a;
     push(g);
-    //printf("Number = %lf\n", g);
 }
 
-void Multiply () //works
+void Multiply ()
 {
     double a = pop();
     double b = pop();
     g = b * a;
     push(g);
-    //printf("Number = %lf\n", g);
 }
 
-void Divide () //works
+void Divide ()
 {
     double a = pop();
     double b = pop();
     g = b / a;
     push(g);
-    //printf("Number = %lf\n", g);
 }
 
-void Power () //works
+void Power ()
 {
     double a = pop();
     double b = pop();
     g = pow(b, a);
     push(g);
-    //printf("Number = %lf\n", g);
 }
 
-void Log () //number, then base -------- works
+void Log () //number, then base
 {
     double a = pop();
     double b = pop();
@@ -324,7 +319,7 @@ void Ln () //works
     //printf("Number = %lf\n", g);
 }
 
-void Root () //number, then root ------------ works
+void Root () //number, then root
 {
     double a = pop();
     double b = pop();
@@ -332,7 +327,7 @@ void Root () //number, then root ------------ works
     push(g);
 }
 
-void Sin () //works (DEG)
+void Sin ()
 {
     double f = pop();
     printf("pop = %lf\n", f);
@@ -348,7 +343,7 @@ void Sin () //works (DEG)
     }
 }
 
-void Cos () //works (DEG)
+void Cos ()
 {
     double f= pop();
     if (RadDeg == 0) //radians
@@ -363,7 +358,7 @@ void Cos () //works (DEG)
     }
 }
 
-void Tan () //works (DEG)
+void Tan ()
 {
     double f= pop();
     if (RadDeg == 0) //radians
@@ -378,7 +373,7 @@ void Tan () //works (DEG)
     }
 }
 
-void Sec () //works (DEG)
+void Sec ()
 {
     double f= pop();
     if (RadDeg == 0) //radians
@@ -393,7 +388,7 @@ void Sec () //works (DEG)
     }
 }
 
-void Csc () //works (DEG)
+void Csc ()
 {
     double f= pop();
     if (RadDeg == 0) //radians
@@ -408,7 +403,7 @@ void Csc () //works (DEG)
     }
 }
 
-void Cot () //works (DEG)
+void Cot ()
 {
     double f= pop();
     if (RadDeg == 0) //radians
@@ -423,7 +418,7 @@ void Cot () //works (DEG)
     }
 }
 
-void Arcsin () //works (DEG)
+void Arcsin ()
 {
     double f= pop();
     double y = asin(f);
@@ -438,7 +433,7 @@ void Arcsin () //works (DEG)
     }
 }
 
-void Arccos () //works (DEG)
+void Arccos ()
 {
     double f= pop();
     double y = acos(f);
@@ -453,7 +448,7 @@ void Arccos () //works (DEG)
     }
 }
 
-void Arctan () //works (DEG)
+void Arctan ()
 {
     double f= pop();
     double y = atan(f);
@@ -762,7 +757,6 @@ void DyDx ()
 
 void ConstMenu ()
 {
-    //printf("hello\n");
     while (!GoHome)
     {
         int Scratch = GetButton();
@@ -853,7 +847,6 @@ void MathMenu ()
 
 void ScrollCnt (int scratch)
 {
-    //printf("foo\n");
     switch (scratch)
     {
         case (45): LRScroll--;
@@ -1287,7 +1280,6 @@ int main (void)
     Initialize();
     while (1)
     {
-        //DecimalFraction();
         UpdateKeyboard();
         //UpdateKernel();
     }
