@@ -56,6 +56,9 @@ char fnc[64];
 
 double π = 3.1415926535;
 
+//Mode Settings
+int RadDeg = 1;
+
 char zero = '0';
 char one = '1';
 char two = '2';
@@ -127,9 +130,6 @@ char apostraphe = '\'';
 char period = '.';
 char quote = '"';
 char comma = ',';
-
-//Mode Settings
-int RadDeg = 1;
 
 //Constants
 char const_array[][32] = {"3.141592653589793", "2.718281828459045", "6.67E-11 N*m*m/kg*kg", "2.99E10 m/s", "6.63E-34 J*s", "6.262E-35 m*m*kg/s", "2.18E-8 kg", "5.39E-44 s", "1.88E-18 C", "1.42E32 K", "sqrt(-1)", "9.109E-31 kg", "1.67E-27 kg", "1.67E-27 kg", "6.022E23 = 1 mol", "-9.8 m/s/s", "14.7 lbs/in*in = 101, 325 Pa"};
@@ -532,7 +532,7 @@ void Store ()
 {
     double a = pop();
     x = a;
-    printf("x == %lf", x);
+    printf("x == %lf\n", x);
 }
 
 void FunctiontoGraph ()
@@ -837,7 +837,7 @@ void MathMenu ()
             }
             if (!strcmp(fnc, dydx))
             {
-                fncPtr = &Derivative;
+                fncPtr = &DyDx;
             }
             UDScroll = 0;
             (*fncPtr)();
