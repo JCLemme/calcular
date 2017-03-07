@@ -40,12 +40,15 @@ double g; //used in operations to push new numbers
 double x; //variable on calculator
 int run_yequals = 1;
 int run_limit = 1;
+int run_derivative = 1;
 double k = 15; //number of pixels from bottom of screen
 
 unsigned int LRScroll = 0;
 unsigned int UDScroll = 0;
 
 int GoHome = 0;
+
+const double a = .00000001;
 
 void (*fncPtr)();
 
@@ -133,7 +136,7 @@ char const_array[][32] = {"3.141592653589793", "2.718281828459045", "6.67E-11 N*
 
 char formula_array[][256] = {"V = (4/3)πr(^3)", "V = π(r^2)h", "V = (1/3)π(r^2)h", "V = (1/3)Bh", "x = Vix*t\nΔy = .5a(t^2) + Viy*t\n(Vfy^2) = (Viy^2) + 2gt\ng = (Vfy - Viy)/2", "μ = Ff/Fn", "Fc = m(v^2)/r\na = (v^2)/r", "Fg = (G*m1*m2)/(r^2)", "a/sin(A) = b/sin(B) = c/sin(C)", "(a^2) = (b^2) + (c^2) - 2bc*cos(A)", "E = I * R", "P1 * V1 = P2 * V2", "F = P*A)", "V1 * T2 = V2 * T1", "(sinx)^2 + (cosx)^2 = 1\nsin(a+-b) = sinacosb +- cosasinb\ncos(a+-b) = cosacosb -+ sinasinb\nsin(2x) = 2sinxcosx\ncos(2x) = (cosx)^2 - (sinx)^2\n(sinx)^2 = (1 - cos(2x))/2\n(cosx)^2 = (1 + cos(2x))/2", "d/dx x^n = n * x^(n-1) * dx\nd/dx a^x = a^x * lna * dx\nd/dx lnx = 1/x * dx", "d/dx sinx = cos dx\nd/dx cosx = -sinx dx\nd/dx tanx = (secx)^2 dx\nd/dx cscx = -cscx * cotx dx\nd/dx secx = secx * tanx dx\nd/dx cotx = -(cscx)^2 dx", "∫x^n dx = x^(n+1)/(n+1) + C; n ≠ 1\n∫1/x dx = ln|x| + C\n∫lnx dx = xln|x| - x + C\n∫e^(ax) dx = e^(ax)/a + C", "∫sinx dx = -cosx + C\n∫cosx dx = sinx + C\n∫tanx dx = -ln|cosx| + C\n∫secx dx = ln|secx + tanx| + C\n∫cscx dx = ln|cscx + cotx| + C\n∫cotx dx = ln|sinx| + C"};
 
-char math_function_array[][32] = {"DecimalFraction", "Distance", "Midpoint", "Quadratic", "RadiansDegrees", "DegreesRadians", "lmt"};
+char math_function_array[][32] = {"DecimalFraction", "Distance", "Midpoint", "Quadratic", "RadiansDegrees", "DegreesRadians", "lmt", "dydx"};
 
 char DecFrac[] = "DecimalFraction";
 char Dist[] = "Distance";
@@ -142,6 +145,7 @@ char Quad[] = "Quadratic";
 char RD[] = "RadiansDegrees";
 char DR[] = "DegreesRadians";
 char lmt[] = "lmt";
+char dydx[] = "dydx";
 
 //Window Settings
 double min_x = -3;
@@ -675,7 +679,6 @@ void DegreesRadians ()
 double LeftLimit ()
 {
     double LHL;
-    double a = .1 * pow(10, -5);
     x = x - a;
     //printf("new x = %lf\n", x);
     Interpreter();
@@ -689,7 +692,6 @@ double LeftLimit ()
 double RightLimit ()
 {
     double RHL;
-    double a = .1 * pow(10, -5);
     x = x + a;
     Interpreter();
     x = x - a;
@@ -727,6 +729,33 @@ void Limit ()
 void limit ()
 {
     strncat(input_type, lmt, 3);
+    strncat(input_type, &space, 1);
+    GoHome = 1;
+}
+
+void TheDsCancel ()
+{
+    double Hx, Yx;
+    double b = x;
+    Interpreter();
+    Hx = pop();
+    x = x - a;
+    Interpreter();
+    Yx = pop();
+    double ddx = (Hx - Yx)/(b - x);
+    printf("Dy/dx = %lf\n", ddx);
+}
+
+void Derivative ()
+{
+    run_derivative = 0;
+    TheDsCancel();
+    run_derivative = 1;
+}
+
+void DyDx ()
+{
+    strncat(input_type, dydx, 4);
     strncat(input_type, &space, 1);
     GoHome = 1;
 }
@@ -806,6 +835,10 @@ void MathMenu ()
             {
                 fncPtr = &limit;
             }
+            if (!strcmp(fnc, dydx))
+            {
+                fncPtr = &Derivative;
+            }
             UDScroll = 0;
             (*fncPtr)();
         }
@@ -836,13 +869,9 @@ void ScrollCnt (int scratch)
 
 void Interpreter ()
 {
-    //printf("HERE\n");
-    //printf("x = %lf\n", x);
     memset(operation, 0, sizeof operation);
     for (int t = 0; t < strlen(input_type); t++)
     {
-        //printf("t = %i\n", t);
-        //printf("string = %s\n", operation);
         char tok = input_type[t];
         
         if (tok != ' ')
@@ -859,7 +888,6 @@ void Interpreter ()
             }
             if (!strcmp(operation, Xx))
             {
-                //printf("X = %lf\n", x);
                 push(x);
                 memset(operation, 0, sizeof operation);
             }
@@ -1003,10 +1031,18 @@ void Interpreter ()
             }
             if (!strcmp(operation, lmt))
             {
-                printf("here\n");
                 if (run_limit == 1)
                 {
                     Limit();
+                }
+                memset(operation, 0, sizeof operation);
+            }
+            if (!strcmp(operation, dydx))
+            {
+                printf("here\n");
+                if (run_derivative == 1)
+                {
+                    Derivative();
                 }
                 memset(operation, 0, sizeof operation);
             }
