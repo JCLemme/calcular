@@ -19,45 +19,54 @@ int w = 0; //0 = Normal, 1 = 2nd, 2 = Alpha
 int Second_cnt = 0;
 int Alpha_cnt = 0;
 
-double stack[64];
-int cnt = 0;
-char number[64];
-char operation[64];
+double stack[64]; //stack
+int cnt = 0; //stack counter
+char number[64]; //store numbers from string
+char operation[64]; //store operation name from string
 
-char text[64];
-char input_type[64];
+char text[64]; //alpha string
+char input_type[64]; //input string from buttons
 
-double xcoordinate[64];
-double ycoordinate[64];
-int coordinate_cnt = 0;
+double xcoordinate[64]; //x coordinate
+double ycoordinate[64]; //y coordinate
+int coordinate_cnt = 0; //coordinate counter to move through array
 
 // ∫ (integral sign for printing text)
 // ≠ (does not equal sign for printing)
 
-int button;
+int button; //button number
 double q; //number to push from buttons
 double g; //used in operations to push new numbers
 double x; //variable on calculator
-int run_yequals = 1;
-int run_limit = 1;
-int run_derivative = 1;
 double k = 15; //number of pixels from bottom of screen
 
-unsigned int LRScroll = 0;
-unsigned int UDScroll = 0;
+unsigned int LRScroll = 0; //Left/ Right scroll tally
+unsigned int UDScroll = 0; //Up/ Down scroll tally
 
-int GoHome = 0;
+int GoHome = 0; //1 = go to home screen, 0 = don't
+int run_yequals = 1; //1 = run, 0 = don't run
+int run_limit = 1; //1 = run, 0 = don't run
+int run_derivative = 1; //1 = run, 0 = don't run
 
-const double a = .00000001;
+const double a = .00000001; //limit and derivative
+double π = 3.1415926535; //pi
 
-void (*fncPtr)();
+void (*fncPtr)(); //function pointer for math functions
 
-char fnc[64];
-
-double π = 3.1415926535;
+char fnc[64]; //function string
 
 //Mode Settings
 int RadDeg = 1;
+
+//Window Settings
+double min_x = -3;
+double max_x = 4;
+double min_y = -1;
+double max_y = 12;
+double step_x = .1;
+double step_y = .1;
+double tick_step_x = 1;
+double tick_step_y = 1;
 
 char zero = '0';
 char one = '1';
@@ -131,7 +140,6 @@ char period = '.';
 char quote = '"';
 char comma = ',';
 
-//Constants
 char const_array[][32] = {"3.141592653589793", "2.718281828459045", "6.67E-11 N*m*m/kg*kg", "2.99E10 m/s", "6.63E-34 J*s", "6.262E-35 m*m*kg/s", "2.18E-8 kg", "5.39E-44 s", "1.88E-18 C", "1.42E32 K", "sqrt(-1)", "9.109E-31 kg", "1.67E-27 kg", "1.67E-27 kg", "6.022E23 = 1 mol", "-9.8 m/s/s", "14.7 lbs/in*in = 101, 325 Pa"};
 
 char formula_array[][256] = {"V = (4/3)πr(^3)", "V = π(r^2)h", "V = (1/3)π(r^2)h", "V = (1/3)Bh", "x = Vix*t\nΔy = .5a(t^2) + Viy*t\n(Vfy^2) = (Viy^2) + 2gt\ng = (Vfy - Viy)/2", "μ = Ff/Fn", "Fc = m(v^2)/r\na = (v^2)/r", "Fg = (G*m1*m2)/(r^2)", "a/sin(A) = b/sin(B) = c/sin(C)", "(a^2) = (b^2) + (c^2) - 2bc*cos(A)", "E = I * R", "P1 * V1 = P2 * V2", "F = P*A)", "V1 * T2 = V2 * T1", "(sinx)^2 + (cosx)^2 = 1\nsin(a+-b) = sinacosb +- cosasinb\ncos(a+-b) = cosacosb -+ sinasinb\nsin(2x) = 2sinxcosx\ncos(2x) = (cosx)^2 - (sinx)^2\n(sinx)^2 = (1 - cos(2x))/2\n(cosx)^2 = (1 + cos(2x))/2", "d/dx x^n = n * x^(n-1) * dx\nd/dx a^x = a^x * lna * dx\nd/dx lnx = 1/x * dx", "d/dx sinx = cos dx\nd/dx cosx = -sinx dx\nd/dx tanx = (secx)^2 dx\nd/dx cscx = -cscx * cotx dx\nd/dx secx = secx * tanx dx\nd/dx cotx = -(cscx)^2 dx", "∫x^n dx = x^(n+1)/(n+1) + C; n ≠ 1\n∫1/x dx = ln|x| + C\n∫lnx dx = xln|x| - x + C\n∫e^(ax) dx = e^(ax)/a + C", "∫sinx dx = -cosx + C\n∫cosx dx = sinx + C\n∫tanx dx = -ln|cosx| + C\n∫secx dx = ln|secx + tanx| + C\n∫cscx dx = ln|cscx + cotx| + C\n∫cotx dx = ln|sinx| + C"};
@@ -146,16 +154,6 @@ char RD[] = "RadiansDegrees";
 char DR[] = "DegreesRadians";
 char lmt[] = "lmt";
 char dydx[] = "dydx";
-
-//Window Settings
-double min_x = -3;
-double max_x = 4;
-double min_y = -1;
-double max_y = 12;
-double step_x = .1;
-double step_y = .1;
-double tick_step_x = 1;
-double tick_step_y = 1;
 
 //Functions
 void push (double b);
