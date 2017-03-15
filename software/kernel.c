@@ -7,6 +7,7 @@
 
 #include "spi.h"
 #include "display.h"
+#include "testcard_a.h"
 
 #define VERSION "0.1a"
 
@@ -16,18 +17,27 @@
  * Kernel - init, loads applications
  */
 
-#define PIN_CS 0
-#define PIN_A0 26
-#define PIN_DAT 25
-#define PIN_CLK 24
-#define PIN_RST 27
+#define PIN_DSP_CS 0
+#define PIN_DSP_A0 26
+#define PIN_DSP_DAT 25
+#define PIN_DSP_CLK 24
+#define PIN_DSP_RST 27
+
+#define PIN_SPI_MOSI 17
+#define PIN_SPI_MISO 16
+#define PIN_SPI_SCK 18
+#define PIN_SPI_IOX 19
+#define PIN_SPI_FPU 22
+#define PIN_SPI_EXT 21
+#define PIN_SPI_SDC 23
+#define PIN_SPI_ADC 20
 
 #define HIGH(x) (OUTA |= (1<<x))
 #define LOW(x) (OUTA &= ~(1<<x))
 
 #define WAIT_MS 5000*16
 
-void main(void)
+int main(void)
 {
     // Gotta go fast - 0x6F is XTAL1+PLL16X, should be clarified later
     clkset(0x6F, 5000000);
@@ -40,17 +50,24 @@ void main(void)
     printf("Calcular - Kernel v%s\n", VERSION);
     printf("The kernel is now starting. Please wait.\n");
     
-    // Start interface cogs for SPI and I2C
-    Display_begin(25, 24, 0, 26, 27);
+    // Start interface cogs for submodules
+    Display_begin(PIN_DSP_DAT, PIN_DSP_CLK, PIN_DSP_CS, PIN_DSP_A0, PIN_DSP_RST);
     
-    Display_sendCommand(0x01, 0);
-    waitcnt(150*WAIT_MS+CNT);
-    Display_sendCommand(0x11, 0);
-    waitcnt(150*WAIT_MS+CNT);
-    Display_sendCommand(0x29, 0);
-    waitcnt(5000*WAIT_MS+CNT);
-    Display_sendCommand(0x23, 0);
-    waitcnt(5000*WAIT_MS+CNT);
+    uint8_t selectSPI[5] = {PIN_SPI_IOX, PIN_SPI_FPU, PIN_SPI_EXT, PIN_SPI_SDC, PIN_SPI_ADC};
+    //SPI_begin(PIN_SPI_MOSI, PIN_SPI_MISO, PIN_SPI_SCK, &selectSPI);
+    
+    // Testing y'all
+    /*SPI_transferSync(0, 0x41);
+    SPI_transferSync(0, 0x00);
+    SPI_transferSync(0, 0x00);
+    SPI_transferSync(0, 0x41);
+    SPI_transferSync(0, 0x09);
+    SPI_transferSync(0, 0x00);*/
+    
+    Display_writeBitmapFull(&testcard, 0);
+    waitcnt(10000*WAIT_MS+CNT);   
+    
+    return 0;
 }
 
 //65, 67, 90

@@ -46,7 +46,7 @@ int SPI_end()
 uint8_t SPI_transferSync(uint8_t cs, uint8_t mosi)
 {
     while(SPI_transferBegin(cs, mosi) == -1) {}
-    waitcnt(CNT+TRS_DELAY);
+    waitcnt(TRS_DELAY+CNT);
     while(SPI_transferState() == -1) {}
     return SPI_transferResult(cs);
 }
