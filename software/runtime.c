@@ -190,7 +190,7 @@ void Graph ();
 void Table ();
 void DecimalFraction ();
 void Distance ();
-void Midpoint ()
+void Midpoint ();
 void Quadratic ();
 void RadiansDegrees ();
 void DegreesRadians ();
