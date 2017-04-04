@@ -31,9 +31,6 @@ double xcoordinate[64]; //x coordinate
 double ycoordinate[64]; //y coordinate
 int coordinate_cnt = 0; //coordinate counter to move through array
 
-// ∫ (integral sign for printing text)
-// ≠ (does not equal sign for printing)
-
 int button; //button number
 double q; //number to push from buttons
 double g; //used in operations to push new numbers
@@ -49,7 +46,7 @@ int run_limit = 1; //1 = run, 0 = don't run
 int run_derivative = 1; //1 = run, 0 = don't run
 
 const double a = .00000001; //limit and derivative
-double π = 3.1415926535; //pi
+double pi = 3.1415926535; //pi
 
 void (*fncPtr)(); //function pointer for math functions
 
@@ -336,7 +333,7 @@ void Sin ()
     }
     if (RadDeg == 1)
     {
-        double y = sin((π*f)/(180));
+        double y = sin((pi*f)/(180));
         push(y);
     }
 }
@@ -351,7 +348,7 @@ void Cos ()
     }
     if (RadDeg == 1)
     {
-        double y = cos((π*f)/(180));
+        double y = cos((pi*f)/(180));
         push(y);
     }
 }
@@ -366,7 +363,7 @@ void Tan ()
     }
     if (RadDeg == 1)
     {
-        double y = tan((π*f)/(180));
+        double y = tan((pi*f)/(180));
         push(y);
     }
 }
@@ -381,7 +378,7 @@ void Sec ()
     }
     if (RadDeg == 1)
     {
-        double y = 1/cos((π*f)/(180));
+        double y = 1/cos((pi*f)/(180));
         push(y);
     }
 }
@@ -396,7 +393,7 @@ void Csc ()
     }
     if (RadDeg == 1)
     {
-        double p = 1/sin((π*f)/(180));
+        double p = 1/sin((pi*f)/(180));
         push(p);
     }
 }
@@ -411,7 +408,7 @@ void Cot ()
     }
     if (RadDeg == 1)
     {
-        double y = 1/tan((π*f)/(180));
+        double y = 1/tan((pi*f)/(180));
         push(y);
     }
 }
@@ -426,7 +423,7 @@ void Arcsin ()
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(π);
+        double z = (y*180)/(pi);
         push(z);
     }
 }
@@ -441,7 +438,7 @@ void Arccos ()
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(π);
+        double z = (y*180)/(pi);
         push(z);
     }
 }
@@ -456,7 +453,7 @@ void Arctan ()
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(π);
+        double z = (y*180)/(pi);
         push(z);
     }
 }
@@ -471,7 +468,7 @@ void Arcsec ()
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(π);
+        double z = (y*180)/(pi);
         push(z);
     }
 }
@@ -486,7 +483,7 @@ void Arccsc ()
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(π);
+        double z = (y*180)/(pi);
         push(z);
     }
 }
@@ -501,7 +498,7 @@ void Arccot ()
     }
     if (RadDeg == 1)
     {
-        double z = (y*180)/(π);
+        double z = (y*180)/(pi);
         push(z);
     }
 }
@@ -531,7 +528,8 @@ void Store ()
 void FunctiontoGraph ()
 {
     run_yequals = 0;
-    for (double p = min_x; p <= max_x; p = p + step_x)
+    double p;
+    for (p = min_x; p <= max_x; p = p + step_x)
     {
         x = p;
         Interpreter();
@@ -550,13 +548,13 @@ void Graph ()
 {
     double delta_x = max_x - min_x;
     double delta_y = max_y - min_y;
-    
+    /*
     double ticks_x = (delta_x)/(tick_step_x);
     double ticks_y = (delta_y)/(tick_step_y);
     
     double tick_dist_x = (240)/(ticks_x);
     double tick_dist_y = (160-k)/(ticks_y);
-    
+    */
     double one_pix_x = (delta_x)/(240);
     printf("one pixel = %lf units\n", one_pix_x);
     double one_pix_y = (delta_y)/(160-k);
@@ -572,7 +570,8 @@ void Graph ()
     double center_unit_x = (max_x + min_x)/2;
     double center_unit_y = (max_y + min_y)/2;
     
-    for (int u = 0; u < coordinate_cnt; u++)
+    int u;
+    for (u = 0; u < coordinate_cnt; u++)
     {
         double h = xcoordinate[u];
         double j = ycoordinate[u];
@@ -605,7 +604,8 @@ void DecimalFraction ()
     double k = pop();
     int num = (k)*(pow(10, 8));
     int den = pow(10, 8);
-    for (unsigned int h = fmax(num, den); h <= fmax(num, den); h--)
+    unsigned int h;
+    for (h = fmax(num, den); h <= fmax(num, den); h--)
     {
         if (num % h == 0 && den % h == 0)
         {
@@ -658,14 +658,14 @@ void Quadratic ()
 void RadiansDegrees ()
 {
     double rad = pop();
-    double deg = (180*rad)/(π);
+    double deg = (180*rad)/(pi);
     printf("%lf degrees\n", deg);
 }
 
 void DegreesRadians ()
 {
     double deg = pop();
-    double rad = (π*deg)/(180);
+    double rad = (pi*deg)/(180);
     printf("%lf radians\n", rad);
 }
 
@@ -861,7 +861,8 @@ void ScrollCnt (int scratch)
 void Interpreter ()
 {
     memset(operation, 0, sizeof operation);
-    for (int t = 0; t < strlen(input_type); t++)
+    int t;
+    for (t = 0; t < strlen(input_type); t++)
     {
         char tok = input_type[t];
         
@@ -1270,7 +1271,6 @@ void UpdateKernel ()
     /*
      talk to kernel to read battery voltage and other stuff like that
      */
-    int b;
 }
 
 int main (void)
