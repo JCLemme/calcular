@@ -6,6 +6,8 @@
 //
 //
 
+// /opt/parallax/bin/propeller-elf-gcc -Wall -o obj/runtime.o -c runtime.c -lm
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
