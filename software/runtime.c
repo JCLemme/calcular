@@ -107,6 +107,7 @@ char arccot[] = "arccot";
 char togglesign[] = "togglesign";
 char store[] = "store";
 char functiontograph[] = "functiontograph";
+char ee[] = "ee";
 
 char A = 'A';
 char B = 'B';
@@ -671,6 +672,14 @@ void DegreesRadians ()
     printf("%lf radians\n", rad);
 }
 
+void EE ()
+{
+    double p = pop();
+    double j = pop();
+    double t = pow(j, (10*p));
+    push(t);
+}
+
 double LeftLimit ()
 {
     double LHL;
@@ -1040,6 +1049,11 @@ void Interpreter ()
                 }
                 memset(operation, 0, sizeof operation);
             }
+            if (!strcmp(operation, ee))
+            {
+                EE();
+                memset(operation, 0, sizeof operation);
+            }
         }
     }
 }
@@ -1137,6 +1151,7 @@ void SecondButton (int btn)
 {
     switch (btn)
     {
+        case (5): strncat(input_type, ee, 2);
         case (7): ConstMenu();
             break;
         case (8): strncat(input_type, store, 5);
