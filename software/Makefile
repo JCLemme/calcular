@@ -1,5 +1,5 @@
 CC=/opt/parallax/bin/propeller-elf-gcc
-CFLAGS=-Wall
+CFLAGS=-Wall -O3
 
 OBJDIR=obj
 BINDIR=bin

@@ -7,7 +7,7 @@
 
 #include "spi.h"
 #include "display.h"
-#include "testcard_a.h"
+#include "terminus_font.h"
 
 #define VERSION "0.1a"
 
@@ -42,14 +42,6 @@ int main(void)
     // Gotta go fast - 0x6F is XTAL1+PLL16X, should be clarified later
     clkset(0x6F, 5000000);
     
-    // Begin serial communications (for kernel messages) 
-    freopen("FDS:9600,31,30", "w", stdout);
-    freopen("FDS:9600,31,30", "w", stderr);
-    freopen("FDS:9600,31,30", "r", stdin);
-    
-    printf("Calcular - Kernel v%s\n", VERSION);
-    printf("The kernel is now starting. Please wait.\n");
-    
     // Start interface cogs for submodules
     Display_begin(PIN_DSP_DAT, PIN_DSP_CLK, PIN_DSP_CS, PIN_DSP_A0, PIN_DSP_RST);
     
@@ -64,8 +56,26 @@ int main(void)
     SPI_transferSync(0, 0x09);
     SPI_transferSync(0, 0x00);*/
     
-    Display_writeBitmapFull(&testcard, 0);
-    waitcnt(10000*WAIT_MS+CNT);   
+    //Display_writeBitmapFull(&testcard, 0);
+    //waitcnt(10000*WAIT_MS+CNT);   
+   
+    char outputstr[256];
+    
+    while(1)
+    {
+        sprintf(outputstr, "This is step %x.        ", CNT);
+        Display_drawStr(1, 1, outputstr, 29, &trfont);
+        sprintf(outputstr, "This is step %x.        ", CNT+1);
+        Display_drawStr(1, 20, outputstr, 29, &trfont);
+        sprintf(outputstr, "This is step %x.        ", CNT+2);
+        Display_drawStr(1, 40, outputstr, 29, &trfont);
+        sprintf(outputstr, "This is step %x.        ", CNT+3);
+        Display_drawStr(1, 60, outputstr, 29, &trfont);
+        sprintf(outputstr, "This is step %x.        ", CNT+4);
+        Display_drawStr(1, 110, outputstr, 29, &trfont);
+        Display_update();
+        waitcnt(100*WAIT_MS+CNT);   
+    }
     
     return 0;
 }
